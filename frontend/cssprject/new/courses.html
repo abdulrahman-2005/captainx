@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Courses</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, rgb(82, 40, 12), rgb(111, 56, 19));
+            color: white;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .course-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-color: #ff6600;
+        }
+
+        .video-container {
+            width: 100%;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .video-container iframe,
+        .video-container .vdo-js {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            border: none;
+        }
+
+        .video-info {
+            padding: 15px 0;
+        }
+
+        .video-title {
+            font-size: 1.4em;
+            margin: 0 0 10px 0;
+            color: #ff6600;
+            font-weight: 600;
+        }
+
+        .video-metadata {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 15px;
+            color: #ddd;
+            font-size: 0.9em;
+        }
+
+        .video-metadata span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .video-description {
+            font-size: 0.95em;
+            color: #ddd;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .thumbnail {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        nav {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 1.5rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        nav a:hover {
+            color: #ff6600;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2em;
+            color: #ddd;
+        }
+
+        .error {
+            background: rgba(255, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            color: #ff4444;
+            text-align: center;
+            border: 1px solid rgba(255, 0, 0, 0.2);
+        }
+
+        .page-title {
+            text-align: center;
+            margin: 40px 0;
+            font-size: 2.5em;
+            color: #ff6600;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Loading animation */
+        .loading-spinner {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 102, 0, 0.3);
+            border-radius: 50%;
+            border-top-color: #ff6600;
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .watch-btn {
+            background: linear-gradient(135deg, #ff6600, #ff9966);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            width: 100%;
+            justify-content: center;
+            font-size: 1.1em;
+        }
+
+        .watch-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 102, 0, 0.3);
+            background: linear-gradient(135deg, #ff9966, #ff6600);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            position: relative;
+            width: 90%;
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 50%;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 102, 0, 0.8);
+            transform: scale(1.1);
+        }
+
+        #videoPlayer {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: black;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .plan-banner {
+            background: linear-gradient(135deg, rgba(255, 102, 0, 0.1), rgba(255, 153, 102, 0.1));
+            padding: 40px 0;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .plan-info {
+            text-align: center;
+        }
+
+        .plan-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .plan-header i {
+            font-size: 2.5em;
+            color: #ff6600;
+        }
+
+        .plan-header h2 {
+            font-size: 2.5em;
+            margin: 0;
+            background: linear-gradient(135deg, #ff6600, #ff9966);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .plan-description {
+            color: #ddd;
+            font-size: 1.1em;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .plan-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            min-width: 150px;
+        }
+
+        .stat i {
+            font-size: 2em;
+            color: #ff6600;
+            margin-bottom: 10px;
+        }
+
+        .stat span {
+            display: block;
+            font-size: 1.5em;
+            font-weight: 600;
+            margin: 5px 0;
+        }
+
+        .stat label {
+            color: #ddd;
+            font-size: 0.9em;
+        }
+
+        .courses-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .courses-filters {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ddd;
+        }
+
+        .search-box input {
+            padding: 12px 20px 12px 45px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1em;
+            width: 300px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            background: rgba(255, 255, 255, 0.15);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(255, 102, 0, 0.5);
+        }
+
+        .view-options {
+            display: flex;
+            gap: 10px;
+        }
+
+        .view-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            color: #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .view-btn.active,
+        .view-btn:hover {
+            background: #ff6600;
+            color: white;
+        }
+
+        .learning-progress {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6600, #ff9966);
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            color: #ddd;
+            font-size: 0.9em;
+            margin: 0;
+        }
+
+        /* Update course grid for list view */
+        .course-grid.list-view {
+            display: block;
+        }
+
+        .course-grid.list-view .course-card {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .course-grid.list-view .thumbnail {
+            width: 280px;
+            height: 157px;
+            margin-bottom: 0;
+        }
+
+        .course-grid.list-view .video-info {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/courses.html">Courses</a>
+    </nav>
+
+    <div class="plan-banner">
+        <div class="container">
+            <div class="plan-info">
+                <div class="plan-header">
+                    <i class="fas fa-crown"></i>
+                    <h2 id="planName">Loading Plan...</h2>
+                </div>
+                <p id="planDescription">Loading plan details...</p>
+                <div class="plan-stats">
+                    <div class="stat">
+                        <i class="fas fa-video"></i>
+                        <span id="courseCount">0</span>
+                        <label>Courses</label>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-clock"></i>
+                        <span id="totalDuration">0:00</span>
+                        <label>Total Duration</label>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="courses-header">
+            <h1 class="page-title">My Learning Journey</h1>
+            <div class="courses-filters">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="courseSearch" placeholder="Search courses...">
+                </div>
+                <div class="view-options">
+                    <button class="view-btn active" data-view="grid">
+                        <i class="fas fa-th-large"></i>
+                    </button>
+                    <button class="view-btn" data-view="list">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="learning-progress">
+            <div class="progress-bar">
+                <div class="progress" style="width: 0%"></div>
+            </div>
+            <p class="progress-text">0% Complete</p>
+        </div>
+
+        <div id="courseContent" class="course-grid">
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                <p>Loading your courses...</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="videoModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeVideo()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div id="videoPlayer"></div>
+        </div>
+    </div>
+
+    <script src="https://player.vdocipher.com/playerAssets/1.6.10/vdo.js"></script>
+    <script>
+        let currentPlayer = null;
+
+        async function loadCourses() {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    window.location.href = '/';
+                    return;
+                }
+
+                const response = await fetch('/api/v1/courses', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    const data = await response.json();
+                    throw new Error(data.error || 'Failed to load courses');
+                }
+
+                const { courses } = await response.json();
+                const courseContent = document.getElementById('courseContent');
+
+                // Remove duplicates based on video ID
+                const uniqueCourses = courses.filter((course, index, self) =>
+                    index === self.findIndex((c) => c.id === course.id)
+                );
+                
+                if (!uniqueCourses.length) {
+                    courseContent.innerHTML = `
+                        <div class="error">
+                            No courses found for your plan.
+                        </div>
+                    `;
+                    return;
+                }
+
+                courseContent.innerHTML = '';
+                uniqueCourses.forEach(course => {
+                    const courseElement = document.createElement('div');
+                    courseElement.className = 'course-card';
+                    
+                    // Format duration from seconds to MM:SS
+                    const duration = course.length ? formatDuration(course.length) : 'N/A';
+                    
+                    courseElement.innerHTML = `
+                        <img src="${course.poster}" alt="${course.title}" class="thumbnail">
+                        <div class="video-info">
+                            <h3 class="video-title">${course.title}</h3>
+                            <div class="video-metadata">
+                                <span><i class="fas fa-clock"></i> ${duration}</span>
+                                <span><i class="fas fa-film"></i> Lesson ${uniqueCourses.indexOf(course) + 1}</span>
+                            </div>
+                            <p class="video-description">${course.description || 'No description available.'}</p>
+                            <button class="watch-btn" onclick="playVideo('${course.id}', '${course.otp}', '${course.playbackInfo}')">
+                                <i class="fas fa-play"></i> Watch Now
+                            </button>
+                        </div>
+                    `;
+                    courseContent.appendChild(courseElement);
+                });
+            } catch (error) {
+                console.error('Error loading courses:', error);
+                document.getElementById('courseContent').innerHTML = `
+                    <div class="error">
+                        ${error.message || 'Failed to load courses. Please try again later.'}
+                    </div>
+                `;
+            }
+        }
+
+        function formatDuration(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+
+        function playVideo(id, otp, playbackInfo) {
+            const modal = document.getElementById('videoModal');
+            const container = document.getElementById('videoPlayer');
+            
+            modal.classList.add('active');
+            
+            // Initialize player
+            currentPlayer = vdo.add({
+                otp: otp,
+                playbackInfo: playbackInfo,
+                theme: '9ae8bbe8dd964ddc9bdb932cca1cb59a',
+                container: container,
+                autoplay: true,
+                controls: true
+            });
+        }
+
+        function closeVideo() {
+            const modal = document.getElementById('videoModal');
+            if (currentPlayer) {
+                currentPlayer.destroy();
+                currentPlayer = null;
+            }
+            modal.classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('videoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeVideo();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeVideo();
+            }
+        });
+
+        async function updatePlanInfo() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            try {
+                const response = await fetch('/api/v1/user/plan', {
+                    headers: {
+                        'Authorization': token
+                    }
+                });
+
+                const data = await response.json();
+                console.log('Plan response:', data);
+
+                if (!response.ok) {
+                    throw new Error(data.error || data.details || 'Failed to fetch plan info');
+                }
+
+                // Just display the plan name without adding another icon
+                document.getElementById('planName').textContent = `${data.plan.name} Plan`;
+                
+                // Update plan description
+                document.getElementById('planDescription').innerHTML = data.plan.description;
+
+                // Update stats
+                document.getElementById('courseCount').textContent = data.content.totalLessons;
+                document.getElementById('totalDuration').textContent = data.content.formattedDuration;
+                //document.getElementById('accessUntil').textContent = data.subscription.accessUntil;
+
+            } catch (error) {
+                console.error('Detailed error:', error);
+                document.getElementById('planName').textContent = 'Plan Info Unavailable';
+                document.getElementById('planDescription').textContent = error.message || 'Please try refreshing the page';
+            }
+        }
+
+        // Add search functionality
+        document.getElementById('courseSearch').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const courses = document.querySelectorAll('.course-card');
+            
+            courses.forEach(course => {
+                const title = course.querySelector('.video-title').textContent.toLowerCase();
+                const description = course.querySelector('.video-description').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                    course.style.display = '';
+                } else {
+                    course.style.display = 'none';
+                }
+            });
+        });
+
+        // Add view switching
+        document.querySelectorAll('.view-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const view = this.dataset.view;
+                document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const courseGrid = document.getElementById('courseContent');
+                if (view === 'list') {
+                    courseGrid.classList.add('list-view');
+                } else {
+                    courseGrid.classList.remove('list-view');
+                }
+            });
+        });
+
+        // Update loadCourses function to include progress
+        function updateProgress(courses) {
+            const totalCourses = courses.length;
+            const watchedCourses = courses.filter(c => c.watched).length;
+            const progress = (watchedCourses / totalCourses) * 100;
+            
+            document.querySelector('.progress').style.width = `${progress}%`;
+            document.querySelector('.progress-text').textContent = `${Math.round(progress)}% Complete`;
+            document.getElementById('courseCount').textContent = totalCourses;
+            
+            const totalMinutes = courses.reduce((acc, curr) => acc + (curr.length || 0), 0);
+            document.getElementById('totalDuration').textContent = formatDuration(totalMinutes);
+        }
+
+        // Call updatePlanInfo when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCourses();
+            updatePlanInfo();
+        });
+    </script>
+</body>
+</html> 

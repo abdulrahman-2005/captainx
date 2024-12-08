@@ -1,0 +1,161 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    font-family: 'Cairo', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, rgb(82, 40, 12), rgb(111, 56, 19));
+    /* خلفية برتقالية داكنة */
+    color: #ffffff;
+    /* لون النصوص الأساسي */
+    line-height: 1.6;
+    padding-top: 80px;
+    direction: rtl;
+    /* اتجاه النصوص للغة العربية */
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    width: 100%;
+    height: 80px;
+    background-color: rgba(255, 255, 255, 0.1);
+    /* شفافية الخلفية */
+    backdrop-filter: blur(10px);
+    /* إضافة تأثير ضبابي */
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo img {
+    height: 60px;
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+}
+
+.nav-link,
+.auth-popup-btn {
+    margin-left: 20px;
+    padding: 0.5rem 1rem;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #ff6600;
+}
+
+.requests-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+    background-color: rgba(49, 35, 23, 0.8);
+    /* خلفية داكنة شفافة */
+    border: 2px solid #FFA500;
+    /* حدود برتقالية */
+    border-radius: 10px;
+    /* زوايا مستديرة */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* ظل خفيف */
+}
+
+.request-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #FF8C00;
+    /* حدود برتقالية داكنة */
+    border-radius: 8px;
+    background-color: rgba(95, 59, 59, 0.85);
+    /* خلفية العنصر بلون داكن */
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.request-item img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border: 2px solid #FFA500;
+    /* إطار برتقالي للصورة */
+}
+
+.request-item h3 {
+    margin: 10px 0 5px;
+    font-size: 20px;
+    text-align: center;
+    color: #FFA500;
+    /* لون العنوان */
+}
+
+.request-details {
+    text-align: right;
+    direction: rtl;
+    width: 100%;
+    padding-right: 20px;
+    box-sizing: border-box;
+    color: #FFF4E1;
+    /* لون النصوص */
+}
+
+.request-details p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #FFF4E1;
+    /* لون النصوص */
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.action-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.action-btn.approve {
+    background-color: #FFA500;
+    /* لون الزر */
+    color: white;
+}
+
+.action-btn.approve:hover {
+    background-color: #FF8C00;
+    /* لون عند التمرير */
+}
+
+.action-btn.cancel {
+    background-color: #FF4500;
+    /* لون زر الإلغاء */
+    color: white;
+}
+
+.action-btn.cancel:hover {
+    background-color: #E63900;
+    /* لون عند التمرير */
+}

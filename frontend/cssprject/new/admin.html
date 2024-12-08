@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="ar">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Captain X - Professional Trader</title>
+        <!-- ربط خط عربي مناسب -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <link rel="stylesheet" href="adminn.css" />
+        <style>
+            /* تنسيق لصندوق الخطة */
+            .plan-box {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                width: 200px;
+                height: 100px;
+                margin: 20px auto;
+                background-color: #f0f0f0;
+                color: #333;
+                font-size: 18px;
+                font-weight: 600;
+                border: 2px solid #ccc;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: 0.3s;
+            }
+
+            .plan-box:hover {
+                background-color: #ddd;
+                border-color: #aaa;
+            }
+
+            .admin-container {
+                background-color: rgba(49, 35, 23, 0.95);
+                padding: 2rem;
+                border-radius: 15px;
+                max-width: 1000px;
+                margin: 20px auto;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .admin-container h2 {
+                color: #fff;
+                text-align: center;
+                margin-bottom: 30px;
+                font-size: 28px;
+            }
+
+            .users-container {
+                padding: 20px;
+                margin: 20px;
+                background-color: rgba(255, 255, 255, 0.1);
+                border-radius: 10px;
+            }
+
+            .users-container h3 {
+                color: #fff;
+                text-align: center;
+                margin-bottom: 20px;
+                font-size: 24px;
+            }
+
+            .user-card {
+                background: rgba(255, 255, 255, 0.95);
+                border: 1px solid #ddd;
+                border-radius: 12px;
+                padding: 20px;
+                margin-bottom: 15px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                transition: transform 0.2s, box-shadow 0.2s;
+            }
+
+            .user-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+            .user-info {
+                flex: 1;
+            }
+
+            .user-info p {
+                color: #333;
+                margin: 8px 0;
+                font-size: 16px;
+            }
+
+            .user-info strong {
+                color: #000;
+                font-weight: 600;
+                margin-left: 8px;
+            }
+
+            .user-actions {
+                display: flex;
+                gap: 10px;
+            }
+
+            .approve-btn, .deny-btn {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                font-weight: 500;
+                transition: all 0.3s ease;
+            }
+
+            .approve-btn {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+            .approve-btn:hover {
+                background-color: #45a049;
+                transform: translateY(-1px);
+            }
+
+            .deny-btn {
+                background-color: #f44336;
+                color: white;
+            }
+
+            .deny-btn:hover {
+                background-color: #da190b;
+                transform: translateY(-1px);
+            }
+
+            .pagination {
+                display: flex;
+                justify-content: center;
+                gap: 15px;
+                margin-top: 30px;
+            }
+
+            .pagination button {
+                padding: 10px 20px;
+                border: 1px solid #ddd;
+                border-radius: 6px;
+                cursor: pointer;
+                background-color: #fff;
+                color: #333;
+                font-weight: 500;
+                transition: all 0.3s ease;
+            }
+
+            .pagination button:hover:not(:disabled) {
+                background-color: #f0f0f0;
+                border-color: #999;
+            }
+
+            .pagination button:disabled {
+                background-color: #ddd;
+                cursor: not-allowed;
+                opacity: 0.7;
+            }
+
+            #page-info {
+                color: #fff;
+                font-size: 16px;
+                display: flex;
+                align-items: center;
+            }
+
+            .submit-btn {
+                background: linear-gradient(135deg, #ff6600, #ff9966);
+                color: white;
+                padding: 12px 24px;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                font-weight: 500;
+                width: 100%;
+                max-width: 400px;
+                margin: 0 auto;
+                display: block;
+                transition: all 0.3s ease;
+            }
+
+            .submit-btn:hover {
+                background: linear-gradient(135deg, #ff9966, #ff6600);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+            /* Loading and error states */
+            .loading-text, .error-text {
+                text-align: center;
+                padding: 20px;
+                color: #fff;
+                font-size: 18px;
+                background-color: rgba(255, 255, 255, 0.1);
+                border-radius: 8px;
+                margin: 20px 0;
+            }
+
+            .error-text {
+                background-color: rgba(244, 67, 54, 0.1);
+                border: 1px solid rgba(244, 67, 54, 0.3);
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar">
+            <div class="nav-links">
+                <a href="/" class="nav-link">الرئيسية</a>
+                <a href="/admin.html" class="nav-link active">لوحة التحكم</a>
+                <a href="/data-for-debugging.html" class="nav-link">عرض البيانات</a>
+            </div>
+        </nav>
+
+        <main>
+            <div class="admin-container">
+                <div class="users-container">
+                    <h3>طلبات المستخدمين</h3>
+                    <div id="users-list"></div>
+                    <div class="pagination">
+                        <button id="prev-page">السابق</button>
+                        <span id="page-info">صفحة 1</span>
+                        <button id="next-page">التالي</button>
+                    </div>
+                </div>
+                <div class="purchases-container">
+                    <h3>طلبات شراء الباقات</h3>
+                    <div id="purchases-list"></div>
+                    <div class="pagination">
+                        <button id="prev-page-purchases">السابق</button>
+                        <span id="page-info-purchases">صفحة 1</span>
+                        <button id="next-page-purchases">التالي</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <script>
+        let currentPage = 1;
+        let purchasesCurrentPage = 1;
+
+        async function checkAdminAccess() {
+            const token = localStorage.getItem('token');
+            const email = localStorage.getItem('email');
+            
+            if (!token || !email) {
+                window.location.href = '/';
+                return false;
+            }
+
+            try {
+                const response = await fetch(`/api/admin/check-access?email=${email}`, {
+                    headers: {
+                        'Authorization': token
+                    }
+                });
+
+                const data = await response.json();
+                if (!data.isAdmin) {
+                    window.location.href = '/';
+                    return false;
+                }
+
+                return true;
+            } catch (error) {
+                console.error('Admin check failed:', error);
+                window.location.href = '/';
+                return false;
+            }
+        }
+
+        async function fetchUsers(page) {
+            try {
+                console.log('Fetching page:', page);
+                const response = await fetch(`/api/admin/users?page=${page}`);
+                const data = await response.json();
+                console.log('Received data:', data);
+                return data;
+            } catch (error) {
+                console.error('Error:', error);
+                return null;
+            }
+        }
+
+        async function approveUser(email) {
+            try {
+                const response = await fetch('/api/admin/approve', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                if (response.ok) loadUsers(currentPage);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function denyUser(email) {
+            try {
+                const response = await fetch('/api/admin/deny', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                if (response.ok) loadUsers(currentPage);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function loadUsers(page) {
+            const usersList = document.getElementById('users-list');
+            usersList.innerHTML = '<div class="loading-text">جاري تحميل المستخدمين...</div>';
+            
+            const data = await fetchUsers(page);
+            console.log('LoadUsers data:', data);
+            
+            if (!data || !data.records) {
+                usersList.innerHTML = '<div class="error-text">حدث خطأ في تحميل البيانات</div>';
+                return;
+            }
+
+            if (data.records.length === 0) {
+                usersList.innerHTML = '<div class="loading-text">لا يوجد مستخدمين في انتظار الموافقة</div>';
+                return;
+            }
+
+            usersList.innerHTML = '';
+            data.records.forEach(user => {
+                const userCard = document.createElement('div');
+                userCard.className = 'user-card';
+                userCard.innerHTML = `
+                    <div class="user-info">
+                        <p><strong>البريد الإلكتروني:</strong> ${user._id}</p>
+                        <p><strong>اسم المستخدم:</strong> ${user.username || 'غير محدد'}</p>
+                        <p><strong>رقم الهاتف:</strong> ${user.phone || 'غير محدد'}</p>
+                        <p><strong>الحالة:</strong> ${getStatusText(user.status)}</p>
+                    </div>
+                    <div class="user-actions">
+                        ${user.status !== 3 ? `<button onclick="approveUser('${user._id}')" class="approve-btn">قبول</button>` : ''}
+                        ${user.status !== 7 ? `<button onclick="denyUser('${user._id}')" class="deny-btn">رفض</button>` : ''}
+                    </div>
+                `;
+                usersList.appendChild(userCard);
+            });
+
+            document.getElementById('page-info').textContent = `صفحة ${page} ��ن ${Math.ceil(data.count / data.recordsPerpage)}`;
+            document.getElementById('prev-page').disabled = page === 1;
+            document.getElementById('next-page').disabled = data.records.length < data.recordsPerpage;
+        }
+
+        function getStatusText(status) {
+            const statuses = {
+                0: 'تسجيل جديد بجوجل',
+                1: 'اكتمل التسجيل - في انتظار الموافقة',
+                2: 'في انتظار الدفع',
+                3: 'تمت الموافقة',
+                7: 'مرفوض'
+            };
+            return statuses[status] || 'غير معروف';
+        }
+
+        document.getElementById('prev-page').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                loadUsers(currentPage);
+            }
+        });
+
+        document.getElementById('next-page').addEventListener('click', () => {
+            currentPage++;
+            loadUsers(currentPage);
+        });
+
+        // Load initial data
+        loadUsers(1);
+
+        async function fetchPurchases(page) {
+            try {
+                const token = localStorage.getItem('token');
+                const email = localStorage.getItem('email');
+                
+                const response = await fetch(`/api/admin/purchases?page=${page}&email=${email}`, {
+                    headers: {
+                        'Authorization': token
+                    }
+                });
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error:', error);
+                return null;
+            }
+        }
+
+        async function approvePurchase(email, plan) {
+            if (!await checkAdminAccess()) return;
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch('/api/admin/approve-purchase', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': token
+                    },
+                    body: JSON.stringify({ email, plan })
+                });
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    // Remove the approved purchase card from UI
+                    const purchaseCard = document.querySelector(`[data-email="${email}"][data-plan="${plan}"]`);
+                    if (purchaseCard) {
+                        purchaseCard.remove();
+                    }
+                    // Show success message
+                    alert('تم قبول الطلب بنجاح');
+                    // Refresh the list
+                    await loadPurchases(purchasesCurrentPage);
+                } else {
+                    alert(data.error || 'حدث خطأ أثناء قبول الطلب');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('حدث خطأ أثناء قبول الطلب');
+            }
+        }
+
+        async function denyPurchase(email, plan) {
+            if (!await checkAdminAccess()) return;
+            try {
+                const response = await fetch('/api/admin/deny-purchase', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, plan })
+                });
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    // Remove the denied purchase card from UI
+                    const purchaseCard = document.querySelector(`[data-email="${email}"][data-plan="${plan}"]`);
+                    if (purchaseCard) {
+                        purchaseCard.remove();
+                    }
+                    // Show success message
+                    alert('تم رفض الطلب بنجاح');
+                    // Refresh the list
+                    await loadPurchases(purchasesCurrentPage);
+                } else {
+                    alert('حدث خطأ أثناء رفض الطلب');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('حدث خطأ أثناء رفض الطلب');
+            }
+        }
+
+        async function loadPurchases(page) {
+            if (!await checkAdminAccess()) return;
+            const purchasesList = document.getElementById('purchases-list');
+            purchasesList.innerHTML = '<div class="loading-text">جاري تحميل الطلبات...</div>';
+            
+            const data = await fetchPurchases(page);
+            if (!data || !data.records) {
+                purchasesList.innerHTML = '<div class="error-text">حدث خطأ في تحميل البيانات</div>';
+                return;
+            }
+
+            if (data.records.length === 0) {
+                purchasesList.innerHTML = '<div class="loading-text">لا يوجد طلبات شراء في انتظار الموافقة</div>';
+                return;
+            }
+
+            purchasesList.innerHTML = '';
+            data.records.forEach(purchase => {
+                if (purchase.status === 1) {
+                    const purchaseCard = document.createElement('div');
+                    purchaseCard.className = 'purchase-card';
+                    // Add data attributes for easy removal
+                    purchaseCard.dataset.email = purchase.email;
+                    purchaseCard.dataset.plan = purchase.plan;
+                    purchaseCard.innerHTML = `
+                        <div class="purchase-info">
+                            <p><strong>البريد الإلكتروني:</strong> ${purchase.email}</p>
+                            <p><strong>الباقة:</strong> ${getPlanText(purchase.plan)}</p>
+                            <p><strong>تاريخ الطلب:</strong> ${new Date(purchase.createdAt).toLocaleString()}</p>
+                        </div>
+                        <div class="purchase-actions">
+                            <button onclick="approvePurchase('${purchase.email}', ${purchase.plan})" class="approve-btn">قبول</button>
+                            <button onclick="denyPurchase('${purchase.email}', ${purchase.plan})" class="deny-btn">رفض</button>
+                        </div>
+                    `;
+                    purchasesList.appendChild(purchaseCard);
+                }
+            });
+
+            if (purchasesList.children.length === 0) {
+                purchasesList.innerHTML = '<div class="loading-text">لا يوجد طلبات شراء في انتظار الموافقة</div>';
+            }
+        }
+
+        function getPlanText(plan) {
+            const plans = {
+                1: 'الأساسية',
+                2: 'المتقدمة',
+                3: 'الاحترافية'
+            };
+            return plans[plan] || 'غير معروف';
+        }
+
+        function getStatusText(status) {
+            const statuses = {
+                1: 'في انتظار الموافقة',
+                2: 'تمت الموافقة',
+                3: 'مرفوض'
+            };
+            return statuses[status] || 'غير معروف';
+        }
+
+        // Initial load
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!await checkAdminAccess()) return;
+            loadPurchases(purchasesCurrentPage);
+            
+            // Refresh purchases list every 30 seconds
+            setInterval(async () => {
+                if (await checkAdminAccess()) {
+                    loadPurchases(purchasesCurrentPage);
+                }
+            }, 30000);
+        });
+        </script>
+    </body>
+</html>

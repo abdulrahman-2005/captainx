@@ -1,0 +1,359 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, rgb(82, 40, 12), rgb(111, 56, 19));
+    background-size: cover;
+    /* لتغطية الخلفية بالكامل */
+    color: #ffffff;
+    line-height: 1.6;
+    padding-top: 80px;
+
+}
+
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 2000;
+}
+
+.popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+}
+
+.popup h3 {
+    color: #ff6600;
+    margin-bottom: 1rem;
+}
+
+.popup input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.popup button {
+    width: 100%;
+    padding: 0.5rem;
+    background-color: #ff6600;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.popup .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #ff6600;
+}
+
+#container {
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8));
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    width: 100%;
+    height: 80px;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo img {
+    height: 60px;
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+}
+
+
+.nav-link,
+.auth-popup-btn {
+    margin-left: 20px;
+    padding: 0.5rem 1rem;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #ff6600;
+}
+
+.auth-popup-btn {
+    background: linear-gradient(90deg, #ff6600, #ff9966);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-popup-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: all 0.5s;
+}
+
+.auth-popup-btn:hover::before {
+    left: 100%;
+}
+
+@media (max-width: 768px) {
+    nav {
+        /* أي إعدادات خاصة بالشاشات الصغيرة */
+    }
+}
+
+nav {
+    transition: top 0.3s;
+    /* إضافة تأثير الانتقال */
+}
+
+.section-title {
+    text-align: center;
+    margin: 2rem 0;
+    font-size: 2rem;
+    color: #ff6600;
+}
+
+.content-section {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    gap: 20px;
+}
+
+.left-column,
+.right-column {
+    flex: 1;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.416);
+    /* خلفية شفافة */
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    /* إضافة ضبابية للخلفية */
+    transition: box-shadow 0.3s ease;
+    /* تأثير انتقال سلس */
+    opacity: 0;
+    /* بدء الفيد ان */
+    transform: translateY(50px);
+    /* بدء الحركة (تحريك لأسفل) */
+    animation: fadeInMove 1s ease-out forwards;
+    /* تأثير الفيد ان مع الحركة */
+    animation-delay: 0.3s;
+    /* تأخير بسيط لبدء الحركة بعد فتح الموقع */
+}
+
+@keyframes fadeInMove {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+        /* يبدأ من الأسفل */
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        /* ينتهي في موضعه الطبيعي */
+    }
+}
+
+.left-column:hover,
+.right-column:hover {
+    box-shadow: 0 0 20px 10px rgba(255, 102, 0, 8);
+    /* تأثير جلو برتقالي */
+}
+
+/* الشكاوي */
+.complaint-form .form-group-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.complaint-form .form-group {
+    flex: 1 1 calc(50% - 20px);
+}
+
+.complaint-form .form-group.full-width {
+    flex: 1 1 100%;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #ff6600;
+    color: #ffffff;
+    font-size: 1rem;
+}
+
+.submit-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: linear-gradient(90deg, #ff6600, #ff9966);
+    /* لون خلفية متدرج */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #ffffff;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    /* تأثير الانتقال لجميع الخصائص */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* ظل خفيف */
+    position: relative;
+    overflow: hidden;
+}
+
+.submit-btn:hover {
+    background: linear-gradient(90deg, #ff9966, #ff6600);
+    /* عكس تدرج الألوان */
+    box-shadow: 0 0 15px rgba(255, 102, 0, 0.5);
+    /* جلو برتقالي */
+    transform: translateY(-2px);
+    /* حركة خفيفة لأعلى */
+}
+
+.submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.3), transparent);
+    transition: all 0.5s;
+}
+
+.submit-btn:hover::before {
+    left: 100%;
+}
+
+/* عني */
+.right-column h2,
+.right-column h3 {
+    color: #ff6600;
+}
+
+.right-column ul {
+    list-style-type: none;
+    margin-top: 1rem;
+}
+
+.right-column ul li {
+    margin-bottom: 10px;
+}
+
+footer {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #ffffff;
+    text-align: center;
+    padding: 3rem 2rem;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 3rem;
+    border-radius: 20px 20px 0 0;
+    backdrop-filter: blur(10px);
+    height: 30vh;
+}
+
+footer p {
+    margin-bottom: 1rem;
+}
+
+.social-links {
+    margin-top: 1.5rem;
+}
+
+.social-links a {
+    color: #ffffff;
+    font-size: 1.5rem;
+    margin: 0 15px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+    color: #ff6600;
+    transform: translateY(-3px);
+}
+
+a {
+    color: #da8b4a;
+    /* لون الرابط - يمكنك تغييره لأي لون */
+}
+
+a:hover {
+    color: #468bbd;
+    /* لون الرابط عند التمرير فوقه */
+}
+
+@media (max-width: 768px) {
+    .content-section {
+        flex-direction: column;
+    }
+
+    nav {
+        flex-direction: column;
+        height: auto;
+        padding: 1rem;
+    }
+
+    .navigation {
+        width: 100%;
+    }
+
+    .nav-link,
+    .auth-popup-btn {
+        text-align: center;
+    }
+}

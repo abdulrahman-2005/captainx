@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Successful</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, rgb(82, 40, 12), rgb(111, 56, 19));
+            color: white;
+        }
+        .success-container {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .success-icon {
+            font-size: 4rem;
+            color: #4CAF50;
+            margin-bottom: 1rem;
+        }
+        .plan-details {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+        }
+        .back-button {
+            margin-top: 2rem;
+            padding: 0.5rem 1rem;
+            background: #ff6600;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <div class="success-icon">✓</div>
+        <h1>Purchase Successful!</h1>
+        <p>Thank you for your purchase. Your plan has been activated.</p>
+        <div class="plan-details" id="planDetails">
+            <!-- Plan details will be inserted here -->
+        </div>
+        <a href="/" class="back-button">Return to Home</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const email = urlParams.get('email');
+            const plan = urlParams.get('plan');
+
+            try {
+                const response = await fetch('/api/v1/check-payment', {
+                    headers: {
+                        'Authorization': localStorage.getItem('token')
+                    }
+                });
+                const data = await response.json();
+                
+                const planDetails = document.getElementById('planDetails');
+                if (data.hasPaid) {
+                    planDetails.innerHTML = `
+                        <h3>Plan Details</h3>
+                        <p>Plan: ${data.currentPlan}</p>
+                        <p>Status: Active and Paid</p>
+                        <p>Purchase Date: ${new Date(data.purchaseDetails.createdAt).toLocaleString()}</p>
+                    `;
+                } else {
+                    planDetails.innerHTML = `
+                        <h3>Plan Details</h3>
+                        <p>Plan: ${data.currentPlan}</p>
+                        <p>Status: Payment Required</p>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html> 
