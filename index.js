@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
-const backend = require('./backend/index.js');
+const path = require('path');
+const backend = require(path.join(__dirname, 'backend', 'index.js'));
 
 backend(app);
