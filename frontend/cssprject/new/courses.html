@@ -606,7 +606,7 @@
         function closeVideo() {
             const modal = document.getElementById('videoModal');
             if (currentPlayer) {
-                currentPlayer.destroy();
+                currentPlayer.pause();
                 currentPlayer = null;
             }
             modal.classList.remove('active');
