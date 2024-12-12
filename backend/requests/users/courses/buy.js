@@ -44,6 +44,11 @@ module.exports = {
 
           let message;
           if (existingPurchase) {
+
+            if (existingPurchase.paid) {
+              return res.status(400).json({ error: "You already have an active subscription." });
+            }
+
             switch(existingPurchase.status) {
               case 1:
                 message = "You already have a pending purchase request. Please wait for admin approval.";
