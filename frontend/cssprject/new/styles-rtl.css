@@ -1,0 +1,77 @@
+/* Import base styles */
+@import url('styles.css');
+
+/* RTL Specific Overrides */
+body {
+    direction: rtl;
+    text-align: right;
+    font-family: 'Cairo', sans-serif;
+}
+
+/* Navigation RTL adjustments */
+.nav-link i {
+    margin-left: 0.5rem;
+    margin-right: 0;
+}
+
+/* Stat boxes RTL adjustments */
+.stat-link i {
+    transform: scaleX(-1);
+}
+
+.stat-link:hover i {
+    transform: scaleX(-1) translateX(-5px);
+}
+
+/* Features list RTL adjustments */
+.feature {
+    flex-direction: row-reverse;
+}
+
+/* Plan buttons RTL adjustments */
+.plan-btn i {
+    transform: scaleX(-1);
+}
+
+.plan-btn:hover i {
+    transform: scaleX(-1) translateX(-5px);
+}
+
+/* Footer RTL adjustments */
+.footer-section h3::after {
+    right: 0;
+    left: auto;
+}
+
+.quick-links a::before {
+    content: '←';
+    margin-left: 0.5rem;
+    transform: translateX(10px);
+}
+
+.quick-links a:hover {
+    transform: translateX(-5px);
+}
+
+/* Social links RTL adjustments */
+.social-link {
+    flex-direction: row-reverse;
+}
+
+/* Modal RTL adjustments */
+.modal-content {
+    text-align: right;
+}
+
+.close-modal {
+    left: 1rem;
+    right: auto;
+}
+
+/* Responsive adjustments for RTL */
+@media (max-width: 768px) {
+    .footer-section h3::after {
+        right: 50%;
+        transform: translateX(50%);
+    }
+} 
