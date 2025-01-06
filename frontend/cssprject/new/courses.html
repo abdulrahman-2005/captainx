@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Courses</title>
+    <meta name="author" content="Captain X">
+    <link rel="icon" href="/imgs/logo.png" type="image/png" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
@@ -19,14 +22,22 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            width: 100%;
+            /* إضافة عرض كامل */
+            box-sizing: border-box;
+            /* لضمان احتساب الـ padding في العرض */
         }
 
+        /* تعديل شبكة الكورسات */
         .course-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             margin-top: 30px;
+            width: 100%;
+            /* تأكيد العرض الكامل */
         }
+
 
         .course-card {
             background: rgba(255, 255, 255, 0.1);
@@ -49,7 +60,8 @@
             border-radius: 10px;
             overflow: hidden;
             position: relative;
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            padding-top: 56.25%;
+            /* 16:9 Aspect Ratio */
             cursor: pointer;
             background: rgba(0, 0, 0, 0.1);
         }
@@ -147,10 +159,13 @@
 
         .page-title {
             text-align: center;
-            margin: 40px 0;
+            margin: 40px auto;
+            /* استخدام auto للهوامش الجانبية */
             font-size: 2.5em;
             color: #ff6600;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            /* تأكيد العرض الكامل */
         }
 
         /* Loading animation */
@@ -166,7 +181,9 @@
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .watch-btn {
@@ -250,11 +267,14 @@
         }
 
         .plan-banner {
+            width: 100%;
             background: linear-gradient(135deg, rgba(255, 102, 0, 0.1), rgba(255, 153, 102, 0.1));
-            padding: 40px 0;
+            padding: 40px 20px;
+            /* إضافة padding جانبي */
             margin-bottom: 40px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
+            box-sizing: border-box;
         }
 
         .plan-info {
@@ -327,6 +347,9 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
+            width: 100%;
+            padding: 0 15px;
+            box-sizing: border-box;
         }
 
         .courses-filters {
@@ -336,7 +359,13 @@
         }
 
         .search-box {
-            position: relative;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .search-box input {
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .search-box i {
@@ -430,8 +459,209 @@
         .course-grid.list-view .video-info {
             flex: 1;
         }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 15px;
+                max-width: 100%;
+            }
+
+            .course-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .course-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 15px;
+            }
+
+            .plan-banner {
+                padding: 30px 15px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .plan-stats {
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+
+            .stat {
+                min-width: 120px;
+            }
+
+            .courses-header {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .courses-filters {
+                width: 100%;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .search-box input {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2em;
+                margin: 20px 0;
+            }
+
+            .plan-header h2 {
+                font-size: 2em;
+            }
+
+            .plan-description {
+                font-size: 1em;
+                padding: 0 15px;
+            }
+
+            .course-grid.list-view .course-card {
+                flex-direction: column;
+            }
+
+            .course-grid.list-view .thumbnail {
+                width: 100%;
+                height: 200px;
+            }
+
+            .video-title {
+                font-size: 1.2em;
+            }
+
+            .video-metadata {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 10px;
+            }
+
+            .close-modal {
+                top: -40px;
+                right: 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .plan-stats {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .stat {
+                width: 100%;
+                max-width: 200px;
+            }
+
+            .course-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .video-container {
+                padding-top: 75%;
+                /* 4:3 Aspect Ratio for mobile */
+            }
+
+            nav {
+                padding: 0.5rem;
+                text-align: center;
+            }
+
+            nav a {
+                margin: 0 0.5rem;
+                font-size: 0.9em;
+            }
+
+            .watch-btn {
+                padding: 10px 16px;
+                font-size: 1em;
+            }
+
+            .courses-filters {
+                gap: 10px;
+            }
+
+            .view-options {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .view-btn {
+                flex: 1;
+                max-width: 120px;
+            }
+        }
+
+        /* Dark Mode Support */
+        @media (prefers-color-scheme: dark) {
+            .course-card {
+                background: rgba(0, 0, 0, 0.2);
+            }
+
+            .search-box input {
+                background: rgba(0, 0, 0, 0.2);
+            }
+
+            .view-btn {
+                background: rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        /* Accessibility Improvements */
+        @media (prefers-reduced-motion: reduce) {
+
+            .course-card,
+            .watch-btn,
+            .close-modal {
+                transition: none;
+            }
+
+            .loading-spinner {
+                animation: none;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .course-grid {
+                display: block;
+            }
+
+            .course-card {
+                break-inside: avoid;
+                margin-bottom: 20px;
+            }
+
+            .video-container,
+            .watch-btn,
+            .modal,
+            nav {
+                display: none;
+            }
+        }
     </style>
 </head>
+
 <body>
     <nav>
         <a href="/">Home</a>
@@ -457,7 +687,7 @@
                         <span id="totalDuration">0:00</span>
                         <label>Total Duration</label>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -468,7 +698,7 @@
             <h1 class="page-title">My Learning Journey</h1>
             <div class="courses-filters">
                 <div class="search-box">
-                    <i class="fas fa-search"></i>
+
                     <input type="text" id="courseSearch" placeholder="Search courses...">
                 </div>
                 <div class="view-options">
@@ -536,7 +766,7 @@
                 const uniqueCourses = courses.filter((course, index, self) =>
                     index === self.findIndex((c) => c.id === course.id)
                 );
-                
+
                 if (!uniqueCourses.length) {
                     courseContent.innerHTML = `
                         <div class="error">
@@ -550,10 +780,10 @@
                 uniqueCourses.forEach(course => {
                     const courseElement = document.createElement('div');
                     courseElement.className = 'course-card';
-                    
+
                     // Format duration from seconds to MM:SS
                     const duration = course.length ? formatDuration(course.length) : 'N/A';
-                    
+
                     courseElement.innerHTML = `
                         <img src="${course.poster}" alt="${course.title}" class="thumbnail">
                         <div class="video-info">
@@ -589,11 +819,11 @@
         function playVideo(id, otp, playbackInfo) {
             const modal = document.getElementById('videoModal');
             const container = document.getElementById('videoPlayer');
-            
+
             modal.classList.add('active');
-            
+
             // Initialize player
-            currentPlayer = vdo.add({
+            vdo.add({
                 otp: otp,
                 playbackInfo: playbackInfo,
                 theme: '9ae8bbe8dd964ddc9bdb932cca1cb59a',
@@ -601,6 +831,8 @@
                 autoplay: true,
                 controls: true
             });
+            const vids = vdo.getObjects();
+            currentPlayer = vids[vids.length - 1];
         }
 
         function closeVideo() {
@@ -613,14 +845,14 @@
         }
 
         // Close modal when clicking outside
-        document.getElementById('videoModal').addEventListener('click', function(e) {
+        document.getElementById('videoModal').addEventListener('click', function (e) {
             if (e.target === this) {
                 closeVideo();
             }
         });
 
         // Close modal with Escape key
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
                 closeVideo();
             }
@@ -638,7 +870,6 @@
                 });
 
                 const data = await response.json();
-                console.log('Plan response:', data);
 
                 if (!response.ok) {
                     throw new Error(data.error || data.details || 'Failed to fetch plan info');
@@ -646,7 +877,7 @@
 
                 // Just display the plan name without adding another icon
                 document.getElementById('planName').textContent = `${data.plan.name} Plan`;
-                
+
                 // Update plan description
                 document.getElementById('planDescription').innerHTML = data.plan.description;
 
@@ -663,14 +894,14 @@
         }
 
         // Add search functionality
-        document.getElementById('courseSearch').addEventListener('input', function(e) {
+        document.getElementById('courseSearch').addEventListener('input', function (e) {
             const searchTerm = e.target.value.toLowerCase();
             const courses = document.querySelectorAll('.course-card');
-            
+
             courses.forEach(course => {
                 const title = course.querySelector('.video-title').textContent.toLowerCase();
                 const description = course.querySelector('.video-description').textContent.toLowerCase();
-                
+
                 if (title.includes(searchTerm) || description.includes(searchTerm)) {
                     course.style.display = '';
                 } else {
@@ -681,11 +912,11 @@
 
         // Add view switching
         document.querySelectorAll('.view-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function () {
                 const view = this.dataset.view;
                 document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
-                
+
                 const courseGrid = document.getElementById('courseContent');
                 if (view === 'list') {
                     courseGrid.classList.add('list-view');
@@ -700,11 +931,11 @@
             const totalCourses = courses.length;
             const watchedCourses = courses.filter(c => c.watched).length;
             const progress = (watchedCourses / totalCourses) * 100;
-            
+
             document.querySelector('.progress').style.width = `${progress}%`;
             document.querySelector('.progress-text').textContent = `${Math.round(progress)}% Complete`;
             document.getElementById('courseCount').textContent = totalCourses;
-            
+
             const totalMinutes = courses.reduce((acc, curr) => acc + (curr.length || 0), 0);
             document.getElementById('totalDuration').textContent = formatDuration(totalMinutes);
         }
@@ -716,4 +947,5 @@
         });
     </script>
 </body>
-</html> 
+
+</html>

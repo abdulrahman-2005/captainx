@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Database Debug View</title>
+    <meta name="author" content="Captain X">
+    <link rel="icon" href="/imgs/logo.png" type="image/png" />
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -235,6 +237,14 @@
         <div id="payments-data"></div>
     </div>
 
+    <div class="section">
+        <div class="section-header">
+            <h2>Complaints</h2>
+            <span id="complaints-count" class="count-badge">0 complaints</span>
+        </div>
+        <div id="complaints-data"></div>
+    </div>
+
     <div class="dialog-overlay" id="dialogOverlay"></div>
     <div class="confirm-dialog" id="confirmDialog">
         <h3>تأكيد الحذف</h3>
@@ -405,6 +415,18 @@
                 if (purchasesData.purchases) {
                     document.getElementById('purchases-data').innerHTML = createTable(purchasesData.purchases, 'purchases');
                     document.getElementById('purchases-count').textContent = `${purchasesData.purchases.length} requests`;
+                }
+
+                // Fetch all complaints
+                const complaintsResponse = await fetch('/api/admin/complaints', { headers });
+                if (!complaintsResponse.ok) {
+                    throw new Error(`HTTP error! status: ${complaintsResponse.status}`);
+                }
+                const complaintsData = await complaintsResponse.json();
+                console.log('Received complaints:', complaintsData);
+                if (complaintsData.records) {
+                    document.getElementById('complaints-data').innerHTML = createTable(complaintsData.records, 'complaints');
+                    document.getElementById('complaints-count').textContent = `${complaintsData.records.length} complaints`;
                 }
 
             } catch (error) {

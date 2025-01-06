@@ -1,8 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
+}
+
+/* إضافة قاعدة خاصة للصفحة العربية مع استثناء الأيقونات */
+[dir="rtl"] *:not(.fas):not(.fab):not(.far):not(.fa) {
+    font-family: "Cairo", sans-serif !important;
+}
+
+/* تأكيد على خط الأيقونات */
+.fas,
+.fab,
+.far,
+.fa {
+    font-family: "Font Awesome 5 Free" !important;
+}
+
+/* خاص بأيقونات العلامة التجارية */
+.fab {
+    font-family: "Font Awesome 5 Brands" !important;
 }
 
 body {
@@ -294,48 +315,45 @@ nav {
 }
 
 footer {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.9);
     color: #ffffff;
     text-align: center;
     padding: 3rem 2rem;
-    width: 80%;
-    margin: 0 auto;
-    margin-top: 3rem;
+    width: 90%;
+    margin: 4rem auto 0 auto;
     border-radius: 20px 20px 0 0;
     backdrop-filter: blur(10px);
-    height: 30vh;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.2);
 }
 
 footer p {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    opacity: 0.9;
 }
 
 .social-links {
-    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
 }
 
 .social-links a {
     color: #ffffff;
-    font-size: 1.5rem;
-    margin: 0 15px;
+    font-size: 1.8rem;
     text-decoration: none;
     transition: all 0.3s ease;
+    opacity: 0.8;
 }
 
 .social-links a:hover {
     color: #ff6600;
-    transform: translateY(-3px);
+    transform: translateY(-5px);
+    opacity: 1;
 }
 
-a {
-    color: #da8b4a;
-    /* لون الرابط - يمكنك تغييره لأي لون */
-}
 
-a:hover {
-    color: #468bbd;
-    /* لون الرابط عند التمرير فوقه */
-}
 
 @media (max-width: 768px) {
     .content-section {

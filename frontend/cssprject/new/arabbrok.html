@@ -5,21 +5,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>كابتن X - متداول محترف</title>
+    <meta name="author" content="Captain X">
+    <link rel="icon" href="/imgs/logo.png" type="image/png" />
     <!-- ربط خط كايرو -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="style2.css" />
-    <style>
-        body {
-            text-align: right;
-        }
 
-        * {
-            font-family: "Cairo", sans-serif;
-            direction: rtl;
-        }
-    </style>
     <script src="js/index.js"></script>
 </head>
 
@@ -37,7 +30,9 @@
                     <a class="nav-link" href="arabind.html"><i class="fas fa-home"></i> الرئيسية</a>
                     <a class="nav-link" href="arabbrok.html"><i class="fas fa-chart-line"></i> مراجعاتنا
                     </a>
-                    <a class="nav-link" href="arabcom.html"><i class="fas fa-comments"></i> الشكاوى</a>
+                    <a class="nav-link" href="arabcom.html" id="complaintBtn" style="display: none;">
+                        <i class="fas fa-comments"></i> الشكاوى
+                    </a>
                     <a class="nav-link" href="broker.html"><i class="fas fa-globe"></i> الترجمة</a>
                 </div>
             </nav>
@@ -202,6 +197,55 @@
 
     <script>
 
+        document.addEventListener('DOMContentLoaded', function () {
+            checkUserRegistration();
+        });
+
+        async function checkUserRegistration() {
+            const token = localStorage.getItem('token');
+            const email = localStorage.getItem('email');
+            const complaintBtn = document.getElementById('complaintBtn');
+
+            if (!token || !email) {
+                if (complaintBtn) complaintBtn.style.display = 'none';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/v1/verfiy/${email}`, {
+                    headers: {
+                        'Authorization': token,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                // إظهار زر الشكاوى فقط إذا كان المستخدم مسجل ومعتمد
+                if (complaintBtn) {
+                    if (data.approved) {
+                        complaintBtn.style.display = 'inline-flex';
+                    } else {
+                        complaintBtn.style.display = 'none';
+                    }
+                }
+
+            } catch (error) {
+                console.error('Error checking registration status:', error);
+                if (complaintBtn) complaintBtn.style.display = 'none';
+            }
+        }
+
+        // إضافة مستمع للتحقق من حالة التسجيل عند تحميل الصفحة
+        window.addEventListener('load', checkUserRegistration);
+
+        // إضافة مستمع للتحقق من حالة التسجيل عند تغيير localStorage
+        window.addEventListener('storage', function (e) {
+            if (e.key === 'token' || e.key === 'email') {
+                checkUserRegistration();
+            }
+        });
+
 
         function animateOnScroll() {
             const elements = document.querySelectorAll('.fade-in, .slide-in');
@@ -235,6 +279,7 @@
             lastScrollTop = currentScroll; // تحديث موقع التمرير الأخير
         });
     </script>
+
 </body>
 
 </html>

@@ -20,7 +20,15 @@ module.exports = {
                 paid: { $ne: true } // Not paid yet
             }).lean();
 
-            res.json({ approvedPurchases });
+            if (!approvedPurchases.length || approvedPurchases.length === 0) {
+                return res.status(404).json({ error: "No approved purchases found" });
+            }
+
+            const latestActivePurchase = approvedPurchases[0];
+            const planConfig = db.pkans[latestActivePurchase.plan];
+
+
+            res.json({ approvedPurchases , planConfig });
         } catch (error) {
             console.error('Error:', error);
             res.status(500).json({ error: "Internal Server Error" });

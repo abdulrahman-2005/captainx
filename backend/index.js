@@ -16,6 +16,17 @@ const cors = require('cors');
 const path = require("path");
 
 module.exports = async function (app) {
+  // Add WWW redirect middleware at the very top
+  app.use((req, res, next) => {
+    const host = req.hostname;
+    // Check if it's not a www subdomain and not localhost
+    if (!host.startsWith('www.') && host === 'captain-x.net') {
+      // 301 permanent redirect
+      return res.redirect(301, `https://www.captain-x.net${req.originalUrl}`);
+    }
+    next();
+  });
+
   app.use(cors());
   app.use(express.json({ limit: '50mb' }));
   app.use(express.urlencoded({ limit: '50mb', extended: true }));
@@ -90,13 +101,13 @@ module.exports = async function (app) {
       if (!req.user) {
         return res.redirect('/login-failed');
       }
-      const user = await database.getUser(req.user.email);
+      const user = await database.getUser(req.user.email, { domain: '.captain-x.net' });  // Set cookie domain
       const email = req.user.email;
       console.log(email);
 
       if (!user) {
         const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: "7d" });
-        await database.createUser(email, token);
+        await database.createUser(email, token, { domain: '.captain-x.net' });  // Set cookie domain
         res.send(
           `<script>
                     localStorage.setItem('token', '${token}');

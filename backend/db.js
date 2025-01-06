@@ -2,7 +2,7 @@ const { verify } = require("crypto");
 const mongoose = require("mongoose");
 const EventEmitter = require("events").EventEmitter;
 mongoose.Promise = global.Promise;
-const admins = ["bodyazmy.new.2005@gmail.com"];  // Add admin emails here
+const admins = ["bodyazmy.new.2005@gmail.com", "ham7code03@gmail.com","ahmedma12w@gmail.com"];  // Add admin emails here
 const sleep = async (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 module.exports = class extends EventEmitter {
@@ -35,6 +35,7 @@ module.exports = class extends EventEmitter {
                 des: "Basic Plan",
                 dur: "1 Month",
                 vdocipher_foldername: "basic",
+                plan: 1
             },
             "2": {
                 price: 588.9,
@@ -43,6 +44,7 @@ module.exports = class extends EventEmitter {
                 des: "Pro Plan",
                 dur: "3 Month",
                 vdocipher_foldername: "pro",
+                plan: 2
             },
             "3": {
                 price: 10000,
@@ -51,12 +53,14 @@ module.exports = class extends EventEmitter {
                 des: "Elite Plan",
                 dur: "12 Month",
                 vdocipher_foldername: "elite",
+                plan: 3
             }
         }
         this.users = require("./models/users.js")(this.connection);
         this.payments = require("./models/payments.js")(this.connection);
         this.purchases = require("./models/purchases.js")(this.connection);
         this.progress = require("./models/progress.js")(this.connection);
+        this.complaints = require("./models/complaint.js")(this.connection);
         this._listenToEvents();
     }
 
@@ -376,6 +380,68 @@ module.exports = class extends EventEmitter {
             };
         } catch (error) {
             console.error('Error in checkUserPaymentStatus:', error);
+            throw error;
+        }
+    }
+
+    async createComplaint(email, subject, companyname, companywebsite, profits, deposit, message) {
+        try {
+
+            //check if the user is registered and approved
+            const user = await this.users.findById(email);
+            if (!user) {
+                return { error: "User not found" };
+            }
+
+            if (user.status !== 2) {
+                return { error: "User not approved" };
+            }
+
+            const newComplaint = await this.complaints.create({
+                _id: new mongoose.Types.ObjectId(),
+                useremail: email,
+                subject,
+                companyname,
+                companywebsite,
+                profits,
+                deposit,
+                message,
+                createdAt: new Date(),
+                status: 1
+            });
+            return newComplaint;
+        } catch (error) {
+            console.error('Error in createComplaint:', error);
+            throw error;
+        }
+    }
+
+    async getComplaints(page = 1) {
+        let recordsPerpage = 10;
+        let pageIndex = page - 1;
+        let recordSkipped = pageIndex * recordsPerpage;
+
+        try {
+            const data = await this.complaints.aggregate([
+                {
+                    $facet: {
+                        data: [
+                            { $skip: recordSkipped },
+                            { $limit: recordsPerpage }
+                        ],
+                        count: [{ $count: "count" }]
+                    }
+                }
+            ]).exec();
+
+            return {
+                records: data[0]?.data || [],
+                count: data[0]?.count?.[0]?.count || 0,
+                recordsPerpage,
+                recordSkipped
+            };
+        } catch (error) {
+            console.error('Error in getComplaints:', error);
             throw error;
         }
     }

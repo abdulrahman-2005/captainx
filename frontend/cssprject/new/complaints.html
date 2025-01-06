@@ -1,324 +1,239 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Captain X - complaints</title>
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-        />
-        <link rel="stylesheet" href="style3.css" />
-    </head>
 
-    <body>
-        <header>
-            <div id="container">
-                <nav>
-                    <div class="logo">
-                        <img
-                            src="../imgs/logo.png"
-                            alt="Captain X Logo"
-                        />
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Captain X - complaints</title>
+    <meta name="author" content="Captain X">
+    <link rel="icon" href="/imgs/logo.png" type="image/png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="style3.css" />
+</head>
+
+<body>
+    <header>
+        <div id="container">
+            <nav>
+                <div class="logo">
+                    <img src="../imgs/logo.png" alt="Captain X Logo" />
+                </div>
+                <div class="navigation">
+                    <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Home</a>
+                    <a class="nav-link" href="broker.html"><i class="fas fa-chart-line"></i> Broker</a>
+                    <a class="nav-link" href="complaints.html"><i class="fas fa-comments"></i> Complaints</a>
+                    <a class="nav-link" href="arabcom.html"><i class="fas fa-globe"></i> Translate</a>
+                </div>
+                <button class="auth-popup-btn" id="authBtn">
+                    <i class="fas fa-user"></i> Login to community
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <section class="content-section">
+        <!-- عمود الشكاوي -->
+        <div class="left-column">
+            <h1 class="section-title">Submit Your Complaint</h1>
+            <form action="#" class="complaint-form">
+                <div class="form-group-wrapper">
+                    <div class="form-group">
+                        <label for="subject">Subject:</label>
+                        <input type="text" id="subject" name="subject" required />
                     </div>
-                    <div class="navigation">
-                        <a class="nav-link" href="index.html"
-                            ><i class="fas fa-home"></i> Home</a
-                        >
-                        <a class="nav-link" href="broker.html"
-                            ><i class="fas fa-chart-line"></i> Broker</a
-                        >
-                        <a class="nav-link" href="complaints.html"
-                            ><i class="fas fa-comments"></i> Complaints</a
-                        >
-                        <a class="nav-link" href="arabcom.html"
-                            ><i class="fas fa-globe"></i> Translate</a
-                        >
+                    <div class="form-group">
+                        <label for="company-name">Company Name:</label>
+                        <input type="text" id="company-name" name="company-name" required />
                     </div>
-                    <button class="auth-popup-btn" id="authBtn">
-                        <i class="fas fa-user"></i> Login to community
-                    </button>
-                </nav>
-            </div>
-        </header>
-
-        <section class="content-section">
-            <!-- عمود الشكاوي -->
-            <div class="left-column">
-                <h1 class="section-title">Submit Your Complaint</h1>
-                <form action="#" class="complaint-form">
-                    <div class="form-group-wrapper">
-                        <div class="form-group">
-                            <label for="name">userName:</label>
-                            <input type="text" id="name" name="name" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="subject">Subject:</label>
-                            <input
-                                type="text"
-                                id="subject"
-                                name="subject"
-                                required
-                            />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="account-number">Account Number:</label>
-                            <input
-                                type="text"
-                                id="account-number"
-                                name="account-number"
-                                required
-                            />
-                        </div>
-                        <div class="form-group">
-                            <label for="company-name">Company Name:</label>
-                            <input
-                                type="text"
-                                id="company-name"
-                                name="company-name"
-                                required
-                            />
-                        </div>
-                        <div class="form-group">
-                            <label for="company-website"
-                                >Company Website Link:</label
-                            >
-                            <input
-                                type="url"
-                                id="company-website"
-                                name="company-website"
-                            />
-                        </div>
-                        <div class="form-group">
-                            <label for="total-profits">Total Profits:</label>
-                            <input
-                                type="number"
-                                id="total-profits"
-                                name="total-profits"
-                                required
-                            />
-                        </div>
-                        <div class="form-group">
-                            <label for="total-deposit">Total Deposit:</label>
-                            <input
-                                type="number"
-                                id="total-deposit"
-                                name="total-deposit"
-                                required
-                            />
-                        </div>
-                        <div class="form-group full-width">
-                            <label for="message">Message:</label>
-                            <textarea
-                                id="message"
-                                name="message"
-                                rows="5"
-                                required
-                            ></textarea>
-                        </div>
+                    <div class="form-group">
+                        <label for="company-website">Company Website Link:</label>
+                        <input type="url" id="company-website" name="company-website" required />
                     </div>
-                    <button type="submit" class="submit-btn">
-                        Send Complaint
-                    </button>
-                </form>
-            </div>
+                    <div class="form-group">
+                        <label for="total-profits">Total Profits:</label>
+                        <input type="number" id="total-profits" name="total-profits" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="total-deposit">Total Deposit:</label>
+                        <input type="number" id="total-deposit" name="total-deposit" required />
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="message">Message:</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn">
+                    Send Complaint
+                </button>
+            </form>
+        </div>
 
-            <!-- عمود التفاصيل الشخصية -->
-            <div class="right-column">
-                <h2>About Complains and Licenes</h2>
-                <p>
-                    When dealing with fraudulent trading companies, the process
-                    of filing a complaint and recovering lost funds can be
-                    complex, but it is essential to take the right steps to
-                    protect your rights. Complaints are usually directed at
-                    companies operating without proper licenses or in violation
-                    of regulations, making it crucial to understand how to deal
-                    with it correctly
-                </p>
-                <br />
-                <h3>IMPORTANT NOTES:</h3>
-                <ul>
-                    <li>
-                        1-Your personal information will only be accessed by
-                        Mohamed Ali to ensure your privacy.
-                    </li>
-                    <li>
-                        2-The compensation timeline depends on various factors,
-                        ranging from 15 days to a year, depending on the
-                        licenses we are dealing with.
-                    </li>
-                    <li>
-                        3-Mohamed Ali receives 15%, with no commission required
-                        before filing the complaint.
-                    </li>
-                    <li>
-                        4-For more details, please refer to the video:
-                        <a
-                            href="https://youtu.be/azZ6KSL4qQk?si=jPj6YOSLxIqrouvv"
-                            target="_blank"
-                            >https://youtu.be/azZ6KSL4qQk?si=jPj6YOSLxIqrouvv</a
-                        >.
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <footer>
-            <p>&copy; 2024 Captain X. All rights reserved.</p>
+        <!-- عمود التفاصيل الشخصية -->
+        <div class="right-column">
+            <h2>About Complains and Licenes</h2>
             <p>
-                Empowering traders with knowledge and tools to navigate the
-                financial markets successfully.
+                When dealing with fraudulent trading companies, the process
+                of filing a complaint and recovering lost funds can be
+                complex, but it is essential to take the right steps to
+                protect your rights. Complaints are usually directed at
+                companies operating without proper licenses or in violation
+                of regulations, making it crucial to understand how to deal
+                with it correctly
             </p>
-            <div class="social-links">
-                <a
-                    href="https://www.facebook.com/Captain7Forex?mibextid=ZbWKwL"
-                    target="_blank"
-                    aria-label="Facebook"
-                >
-                    <i class="fab fa-facebook"></i>
-                </a>
-                <a
-                    href="https://www.tiktok.com/@captain.x06?_t=8qIR0DQtPK4&_r=1"
-                    target="_blank"
-                    aria-label="TikTok"
-                >
-                    <i class="fab fa-tiktok"></i>
-                </a>
-                <a
-                    href="https://www.instagram.com/captain.x06?igsh=MzJmNW5ueWcwZm5o"
-                    target="_blank"
-                    aria-label="Instagram"
-                >
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a
-                    href="https://youtube.com/@captain-x?si=ARffLNuI1rI1DhIf"
-                    target="_blank"
-                    aria-label="YouTube"
-                >
-                    <i class="fab fa-youtube"></i>
-                </a>
-            </div>
-            <!-- رابط لصفحة Privacy and Policy -->
-            <p><a href="privacy.html" target="_blank">Privacy&Policy</a></p>
-        </footer>
+            <br />
+            <h3>IMPORTANT NOTES:</h3>
+            <ul>
+                <li>
+                    1-Your personal information will only be accessed by
+                    Mohamed Ali to ensure your privacy.
+                </li>
+                <li>
+                    2-The compensation timeline depends on various factors,
+                    ranging from 15 days to a year, depending on the
+                    licenses we are dealing with.
+                </li>
+                <li>
+                    3-Mohamed Ali receives 15%, with no commission required
+                    before filing the complaint.
+                </li>
+                <li>
+                    4-For more details, please refer to the video:
+                    <a href="https://youtu.be/azZ6KSL4qQk?si=jPj6YOSLxIqrouvv"
+                        target="_blank">https://youtu.be/azZ6KSL4qQk?si=jPj6YOSLxIqrouvv</a>.
+                </li>
+            </ul>
+        </div>
+    </section>
 
-        <script>
-            // Get user authentication details
-            const userToken = localStorage.getItem('token');
-            const userEmail = localStorage.getItem('email');
-        
-            // Constants for form fields
-            const complaintForm = document.querySelector(".complaint-form");
-            const userNameField = document.querySelector("#name");
-            const subjectField = document.querySelector("#subject");
-            const accountNumberField = document.querySelector("#account-number");
-            const companyNameField = document.querySelector("#company-name");
-            const companyWebsiteField = document.querySelector("#company-website");
-            const totalProfitsField = document.querySelector("#total-profits");
-            const totalDepositField = document.querySelector("#total-deposit");
-            const messageField = document.querySelector("#message");
-            const submitButton = document.querySelector(".submit-btn");
-        
-            complaintForm.addEventListener("submit", async (event) => {
-                event.preventDefault();
-        
-                // Check if user is logged in
-                if (!userToken || !userEmail) {
-                    alert('Please log in to submit a complaint');
-                    window.location.href = '/login.html';
-                    return;
-                }
-        
-                // Basic client-side validation
-                const requiredFields = [
-                    userNameField,
-                    subjectField,
-                    companyNameField,
-                    companyWebsiteField,
-                    totalProfitsField,
-                    totalDepositField,
-                    messageField
-                ];
-        
-                const isValid = requiredFields.every(field => field.value.trim() !== '');
-        
-                if (!isValid) {
-                    alert('Please fill in all required fields');
-                    return;
-                }
-        
-                try {
-                    submitButton.disabled = true;
-                    submitButton.textContent = 'Sending...';
-        
-                    const response = await fetch(`/api/v1/report/send/${userEmail}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': userToken
-                        },
-                        body: JSON.stringify({
-                            user_name: userNameField.value,
-                            subject: subjectField.value,
-                            company_name: companyNameField.value,
-                            company_website: companyWebsiteField.value,
-                            profits: totalProfitsField.value,
-                            deposit: totalDepositField.value,
-                            message: messageField.value
-                        })
-                    });
-        
-                    const data = await response.json();
-        
-                    if (response.ok) {
-                        alert('Complaint submitted successfully!');
-                        complaintForm.reset();
-                    } else {
-                        switch (response.status) {
-                            case 401:
-                                if (data.message.includes('unverified')) {
-                                    alert('Your account is not verified. Please verify your account first.');
-                                } else {
-                                    alert('Please log in again to submit your complaint.');
-                                    localStorage.clear();
-                                    window.location.href = '/login.html';
-                                }
-                                break;
-                            case 404:
-                                alert('User account not found. Please log in again.');
+    <footer>
+        <p>&copy; 2024 Captain X. All rights reserved.</p>
+        <p>
+            Empowering traders with knowledge and tools to navigate the
+            financial markets successfully.
+        </p>
+        <div class="social-links">
+            <a href="https://www.facebook.com/Captain7Forex?mibextid=ZbWKwL" target="_blank" aria-label="Facebook">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="https://www.tiktok.com/@captain.x06?_t=8qIR0DQtPK4&_r=1" target="_blank" aria-label="TikTok">
+                <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://www.instagram.com/captain.x06?igsh=MzJmNW5ueWcwZm5o" target="_blank"
+                aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://youtube.com/@captain-x?si=ARffLNuI1rI1DhIf" target="_blank" aria-label="YouTube">
+                <i class="fab fa-youtube"></i>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const userToken = localStorage.getItem('token');
+        const userEmail = localStorage.getItem('email');
+
+        const complaintForm = document.querySelector(".complaint-form");
+        const subjectField = document.querySelector("#subject");
+        const companyNameField = document.querySelector("#company-name");
+        const companyWebsiteField = document.querySelector("#company-website");
+        const totalProfitsField = document.querySelector("#total-profits");
+        const totalDepositField = document.querySelector("#total-deposit");
+        const messageField = document.querySelector("#message");
+        const submitButton = document.querySelector(".submit-btn");
+
+        complaintForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            if (!userToken || !userEmail) {
+                alert('Please log in to submit a complaint');
+                window.location.href = '/login.html';
+                return;
+            }
+
+            const requiredFields = [
+                subjectField,
+                companyNameField,
+                companyWebsiteField,
+                totalProfitsField,
+                totalDepositField,
+                messageField
+            ];
+
+            if (!requiredFields.every(field => field.value.trim() !== '')) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            try {
+                submitButton.disabled = true;
+                submitButton.textContent = 'Sending...';
+
+                const response = await fetch(`/api/v1/report/send/${userEmail}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': userToken
+                    },
+                    body: JSON.stringify({
+                        subject: subjectField.value,
+                        company_name: companyNameField.value,
+                        company_website: companyWebsiteField.value,
+                        profits: totalProfitsField.value,
+                        deposit: totalDepositField.value,
+                        message: messageField.value
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('Complaint submitted successfully!');
+                    complaintForm.reset();
+                } else {
+                    switch (response.status) {
+                        case 401:
+                            if (data.message.includes('unverified')) {
+                                alert('Your account is not verified. Please verify your account first.');
+                            } else {
+                                alert('Please log in again to submit your complaint.');
                                 localStorage.clear();
                                 window.location.href = '/login.html';
-                                break;
-                            default:
-                                alert(data.message || 'An error occurred. Please try again.');
-                        }
-                    }
-                } catch (error) {
-                    console.error('Submission error:', error);
-                    alert('Network error. Please try again.');
-                } finally {
-                    submitButton.disabled = false;
-                    submitButton.textContent = 'Send Complaint';
-                }
-            });
-        
-            // Check authentication on page load
-            document.addEventListener('DOMContentLoaded', () => {
-                if (!userToken || !userEmail) {
-                    const authBtn = document.getElementById('authBtn');
-                    if (authBtn) {
-                        authBtn.style.display = 'block';
-                    }
-                } else {
-                    const authBtn = document.getElementById('authBtn');
-                    if (authBtn) {
-                        authBtn.style.display = 'none';
+                            }
+                            break;
+                        case 404:
+                            alert('User account not found. Please log in again.');
+                            localStorage.clear();
+                            window.location.href = '/login.html';
+                            break;
+                        default:
+                            alert(data.message || 'An error occurred. Please try again.');
                     }
                 }
-            });
-        </script>
-        <script src="js/index.js"></script>
-    </body>
+            } catch (error) {
+                console.error('Submission error:', error);
+                alert('Network error. Please try again.');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Send Complaint';
+            }
+        });
+
+        // Check authentication on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!userToken || !userEmail) {
+                const authBtn = document.getElementById('authBtn');
+                if (authBtn) {
+                    authBtn.style.display = 'block';
+                }
+            } else {
+                const authBtn = document.getElementById('authBtn');
+                if (authBtn) {
+                    authBtn.style.display = 'none';
+                }
+            }
+        });
+    </script>
+    <script src="js/index.js"></script>
+</body>
+
 </html>

@@ -2,10 +2,34 @@ let removedData = [];
 let isMobile = false;
 let navLinksStyle
 let navigationStyle
+let lastScrollTop = 0; // ﻞﺘﺧﺰﻴﻧ ﻡﻮﻘﻋ ﺎﻠﺘﻣﺮﻳﺭ ﺍﻸﺨﻳﺭ
 
+window.addEventListener("scroll", function () {
+    const nav = document.querySelector("nav");
+    const currentScroll =
+        window.pageYOffset || document.documentElement.scrollTop; // ﺎﻠﺤﺻﻮﻟ ﻊﻟﻯ ﻡﻮﻘﻋ ﺎﻠﺘﻣﺮﻳﺭ ﺎﻠﺣﺎﻠﻳ
+
+    if (currentScroll > lastScrollTop) {
+        // ﺇﺫﺍ ﻙﺎﻧ ﺎﻠﺘﻣﺮﻳﺭ ﻝﻸﺴﻔﻟ
+        nav.style.top = "-80px"; // ﻖﻣ ﺏﺈﺨﻓﺍﺀ ﺵﺮﻴﻃ ﺎﻠﺘﻨﻘﻟ
+    } else {
+        // ﺇﺫﺍ ﻙﺎﻧ ﺎﻠﺘﻣﺮﻳﺭ ﻝﻸﻌﻟﻯ
+        nav.style.top = "0"; // ﺄﻈﻫﺭ ﺵﺮﻴﻃ ﺎﻠﺘﻨﻘﻟ
+    }
+    lastScrollTop = currentScroll; // ﺖﺣﺪﻴﺛ ﻡﻮﻘﻋ ﺎﻠﺘﻣﺮﻳﺭ ﺍﻸﺨﻳﺭ
+});
 window.onload = () => {
     const handleResize = () => {
-        const navLinks = document.querySelectorAll(".nav-link");
+        //const navLinks = document.querySelectorAll(".nav-link");
+        let navLinks = document.querySelectorAll(".nav-link:not(.hidden)");
+        let newNavLinks = []
+        for (let i = 0; i < navLinks.length; i++) {
+            if (navLinks[i].style.display !== "none") {
+                newNavLinks.push(navLinks[i])
+            }
+        }
+        navLinks = newNavLinks
+
         const windowWidth = window.innerWidth;
         const navigation = document.querySelector(".navigation");
 

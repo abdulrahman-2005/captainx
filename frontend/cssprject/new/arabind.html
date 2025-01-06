@@ -1,398 +1,55 @@
 <!doctype html>
 <html lang="en">
 
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Captain X - Professional Trader</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet" />
+    <title>كابتن اكس - متداول محترف في السوق</title>
+    <meta name="description" content="كابتن اكس، متداول محترف في السوق المالي، مكتشف لمعادلات الراتو الذهبية في السوق المالي ويوتيوبر متخصص في كشف شركات التداول النصابة.">
+    <meta name="keywords" content="كابتن اكس, متداول, سوق مالي, معادلات الراتو, يوتيوبر, شركات تداول, نصابة">
+    <meta name="author" content="Captain X">
+    <link rel="icon" href="/imgs/logo.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/imgs/logo.png" />
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="styles.css" />
-    <style>
-        body {
-            direction: rtl;
-            text-align: right;
-        }
+    <link rel="stylesheet" href="registration-form.css">
+    <link rel="stylesheet" href="styles-rtl.css">
 
-        * {
-            font-family: "Cairo", sans-serif;
-        }
-
-        .ltr {
-            direction: ltr;
-            text-align: left;
-        }
-
-        /* Modal Container */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90%;
-            max-width: 700px;
-            background: linear-gradient(145deg, #ffffff, #f8f9fa);
-            box-shadow: 0 15px 35px rgba(49, 35, 23, 0.2);
-            border-radius: 24px;
-            padding: 40px;
-            z-index: 1000;
-            overflow-y: auto;
-            max-height: 85vh;
-        }
-
-        /* Modal Header */
-        .modal h2 {
-            color: #312317;
-            font-size: 32px;
-            text-align: center;
-            margin-bottom: 35px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #312317, #ff6600);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            padding-bottom: 10px;
-            border-bottom: 2px solid rgba(255, 102, 0, 0.1);
-        }
-
-        /* Form Groups */
-        .form-group {
-            margin-bottom: 30px;
-            position: relative;
-        }
-
-        .form-group label {
-            display: block;
-            color: #312317;
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 16px 20px;
-            border: 2px solid rgba(49, 35, 23, 0.1);
-            border-radius: 16px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            background: #ffffff;
-            color: #312317;
-        }
-
-        .form-group input:focus {
-            border-color: #ff6600;
-            box-shadow: 0 0 0 4px rgba(255, 102, 0, 0.1);
-            outline: none;
-            transform: translateY(-2px);
-        }
-
-        /* Camera Groups */
-        .camera-group,
-        .id-upload-group {
-            background: linear-gradient(145deg, #ffffff, #f8f9fa);
-            padding: 25px;
-            border-radius: 16px;
-            margin-bottom: 30px;
-            border: 2px solid rgba(49, 35, 23, 0.1);
-            box-shadow: 0 5px 15px rgba(49, 35, 23, 0.05);
-        }
-
-        .camera-group label,
-        .id-upload-group label {
-            font-size: 18px;
-            color: #312317;
-            font-weight: 600;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        /* Buttons */
-        .camera-btn,
-        .capture-btn,
-        .file-label {
-            background: linear-gradient(135deg, #ff6600, #ff9966);
-            color: white;
-            padding: 16px 24px;
-            border: none;
-            border-radius: 16px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 16px;
-            width: 100%;
-            margin: 10px 0;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            text-align: center;
-        }
-
-        .camera-btn:hover,
-        .capture-btn:hover,
-        .file-label:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 102, 0, 0.2);
-            background: linear-gradient(135deg, #ff9966, #ff6600);
-        }
-
-        /* Preview Areas */
-        #cameraPreview,
-        #idCameraPreview {
-            width: 100%;
-            max-width: 450px;
-            margin: 20px auto;
-            border-radius: 16px;
-            border: 3px solid rgba(49, 35, 23, 0.1);
-            box-shadow: 0 5px 15px rgba(49, 35, 23, 0.05);
-        }
-
-        .image-preview {
-            width: 100%;
-            height: 300px;
-            border: 3px dashed rgba(49, 35, 23, 0.1);
-            border-radius: 16px;
-            margin: 20px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            background: #ffffff;
-            transition: all 0.3s ease;
-        }
-
-        .image-preview:hover {
-            border-color: #ff6600;
-            box-shadow: 0 5px 15px rgba(255, 102, 0, 0.1);
-        }
-
-        .image-preview img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            border-radius: 12px;
-        }
-
-        /* Upload Options */
-        .upload-options {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin: 20px 0;
-        }
-
-        .file-name {
-            display: block;
-            text-align: center;
-            margin-top: 10px;
-            font-size: 14px;
-            color: #312317;
-            font-weight: 500;
-        }
-
-        /* Submit Button */
-        .submit-btn {
-            background: linear-gradient(135deg, #ff6600, #ff9966);
-            color: white;
-            width: 100%;
-            padding: 20px;
-            border: none;
-            border-radius: 16px;
-            font-size: 18px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 35px;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(255, 102, 0, 0.25);
-            background: linear-gradient(135deg, #ff9966, #ff6600);
-        }
-
-        /* Note Text */
-        .note {
-            text-align: center;
-            color: #312317;
-            font-size: 14px;
-            margin-top: 25px;
-            opacity: 0.7;
-            font-weight: 500;
-        }
-
-        /* Overlay */
-        .overlay {
-            background: rgba(49, 35, 23, 0.8);
-            backdrop-filter: blur(8px);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .modal {
-                padding: 30px;
-                width: 95%;
-                max-height: 90vh;
-            }
-
-            .upload-options {
-                grid-template-columns: 1fr;
-            }
-
-            .form-group input,
-            .camera-btn,
-            .capture-btn {
-                padding: 14px;
-            }
-
-            .modal h2 {
-                font-size: 28px;
-            }
-
-            .image-preview {
-                height: 250px;
-            }
-        }
-
-        /* Loading States */
-        .loading {
-            opacity: 0.7;
-            pointer-events: none;
-        }
-
-        /* Success States */
-        .success {
-            border-color: #4CAF50 !important;
-        }
-
-        /* Error States */
-        .error {
-            border-color: #f44336 !important;
-        }
-
-        main {
-            background-image: url("imgs/main_background.png");
-            text-align: right;
-        }
-
-        /* Add to your existing styles */
-        .file-upload {
-            width: 100%;
-            margin: 10px 0;
-        }
-
-        .file-input {
-            display: none;
-        }
-
-        .file-label {
-            background: linear-gradient(135deg, #ff6600, #ff9966);
-            color: white;
-            padding: 16px 24px;
-            border: none;
-            border-radius: 16px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 16px;
-            width: 100%;
-            margin: 10px 0;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-        }
-
-        .file-label:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 102, 0, 0.2);
-            background: linear-gradient(135deg, #ff9966, #ff6600);
-        }
-
-        .file-upload-container {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .file-input {
-            display: none;
-        }
-
-        .file-label {
-            background: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .file-label:hover {
-            background: #45a049;
-        }
-
-        .image-preview {
-            margin-top: 10px;
-            max-width: 100%;
-            overflow: hidden;
-        }
-
-        .image-preview img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 5px;
-        }
-
-        /* Add this to your CSS */
-        .admin-only {
-            display: none;
-            /* Hidden by default */
-        }
-    </style>
 </head>
 
 <body>
-    <header>
-        <div id="container">
-            <nav>
-                <div class="logo">
-                    <img src="/imgs/logo.png" alt="Captain X Logo" />
-                </div>
-                <div class="navigation">
-                    <a class="nav-link" href="arabind.html"><i class="fas fa-home"></i> الرئيسية</a>
-                    <a class="nav-link" href="arabbrok.html"><i class="fas fa-chart-line"></i> مراجعاتنا</a>
-                    <a class="nav-link" href="arabcom.html"><i class="fas fa-comments"></i> الشكاوى</a>
-                    <a class="nav-link" href="index.html"><i class="fas fa-globe"></i> ترجمة</a>
-                    <a class="nav-link" id="coursesLink" href="courses.html" style="display: none;">
-                        <i class="fas fa-graduation-cap"></i> كورساتي
-                    </a>
-                    <a class="nav-link admin-only" href="admin.html" style="display: none;">
-                        <i class="fas fa-cog"></i> الأدمن
-                    </a>
-                </div>
-                <div class="cta-buttons">
-                    <a href="/auth/google" class="cta-button" id="loginBtn">
-                        <i class="fab fa-google"></i> تسجيل الدخول بجوجل
-                    </a>
-                    <button class="cta-button register-btn" id="registerBtn" style="display: none;">
-                        <i class="fas fa-user-plus"></i> Complete Registration
-                    </button>
-                </div>
-            </nav>
+    <nav>
+        <div class="logo">
+            <img src="/imgs/logo.png" alt="Captain X Logo" />
         </div>
-    </header>
+        <div class="navigation">
+            <a class="nav-link" href="arabind.html"><i class="fas fa-home"></i> الرئيسية</a>
+            <a class="nav-link" href="arabbrok.html"><i class="fas fa-chart-line"></i> المراجعات</a>
+            <a class="nav-link" href="arabcom.html" id="complaintBtn"><i class="fas fa-comments"></i>
+                الشكاوى</a>
+            <a class="nav-link" href="index.html"><i class="fas fa-globe"></i> التر��مة</a>
+            <a class="nav-link" id="coursesLink" href="courses.html" style="display: none;">
+                <i class="fas fa-graduation-cap"></i> كورساتي
+            </a>
+            <a class="nav-link admin-only" href="admin.html" style="display: none;">
+                <i class="fas fa-cog"></i> الأدمن
+            </a>
+        </div>
+        <div class="cta-buttons">
+            <a href="/auth/google" class="cta-button" id="loginBtn">
+                <i class="fab fa-google"></i> تسجيل الدخول بجوجل
+            </a>
+            <button class="cta-button register-btn" id="registerBtn" style="display: none;">
+                <i class="fas fa-user-plus"></i> اكمال التسجيل
+            </button>
+            <!-- إضافة زر تسجيل الخروج -->
+            <button class="cta-button logout-btn" id="logoutBtn" style="display: none;">
+                <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+            </button>
+        </div>
+    </nav>
 
     <main>
         <div class="main-content fade-in">
@@ -401,7 +58,7 @@
                 متداول محترف في السوق المالي
             </h2>
             <p>
-                مكتشف معادلات "راتو الذهبية" في السوق المالي ويوتيوبر متخصص في كشف شركات التداول الاحتيالية بفضل الله.
+                مكتشف معادلات راتو الذهبية في السوق المالي ويوتيوبر متخصص في كشف الشركات التدوال الاحتيالية بفضل الله
             </p>
             <!-- رابط لصفحة الفيسبوك -->
             <a href="https://www.facebook.com/Captain7Forex?mibextid=ZbWKwL" target="_blank">
@@ -410,8 +67,261 @@
                 </button>
             </a>
         </div>
+
         <div class="main-image slide-in"></div>
     </main>
+
+
+    <section class="statistics">
+        <h2 class="statistics-title">تابع رحلتنا</h2>
+        <div class="statistics-container">
+            <div class="stat-box youtube">
+                <div class="stat-icon">
+                    <i class="fab fa-youtube"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>YouTube</h3>
+                    <div class="counter-wrapper">
+                        <span class="counter" data-target="198000">0</span>
+                        <span class="counter-suffix">+</span>
+                    </div>
+                    <p>Subscribers</p>
+                </div>
+                <a href="https://youtube.com/@captain-x?si=ARffLNuI1rI1DhIf" class="stat-link" target="_blank">
+                    Subscribe <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="stat-box tiktok">
+                <div class="stat-icon">
+                    <i class="fab fa-tiktok"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>TikTok</h3>
+                    <div class="counter-wrapper">
+                        <span class="counter" data-target="3000">0</span>
+                        <span class="counter-suffix">+</span>
+                    </div>
+                    <p>Followers</p>
+                </div>
+                <a href="https://www.tiktok.com/@captain.x06?_t=8qIR0DQtPK4&_r=1" class="stat-link" target="_blank">
+                    Follow <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="stat-box instagram">
+                <div class="stat-icon">
+                    <i class="fab fa-instagram"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Instagram</h3>
+                    <div class="counter-wrapper">
+                        <span class="counter" data-target="8000">0</span>
+                        <span class="counter-suffix">+</span>
+                    </div>
+                    <p>Followers</p>
+                </div>
+                <a href="https://www.instagram.com/captain.x06?igsh=MzJmNW5ueWcwZm5o" class="stat-link" target="_blank">
+                    Follow <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="stat-box facebook">
+                <div class="stat-icon">
+                    <i class="fab fa-facebook"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Facebook</h3>
+                    <div class="counter-wrapper">
+                        <span class="counter" data-target="28000">0</span>
+                        <span class="counter-suffix">+</span>
+                    </div>
+                    <p>Likes</p>
+                </div>
+                <a href="https://www.facebook.com/Captain7Forex?mibextid=ZbWKwL" class="stat-link" target="_blank">
+                    Like <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="subscription-section">
+        <div class="subscription-header fade-in">
+            <h2>اختر رحلتك في التداول</h2>
+            <p>اختر الخطة التي تناسب أهد��فك وخبرتك في التداول. اكتشف قوة التداول الاحترافي مع الكابتن X.</p>
+        </div>
+        <div class="subscription-cards">
+            <div class="plan-card basic slide-in">
+                <div class="plan-header">
+                    <div class="plan-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>الخطة الأساسية</h3>
+                    <div class="price">
+                        <span class="amount">32.9 دولار</span>
+                        <span class="period">/ شهريًا</span>
+                    </div>
+                </div>
+                <div class="plan-features">
+                    <div class="feature">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>وصول لمدة 30 يومًا</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-play-circle"></i>
+                        <span>فيديوهات تدريبية محدودة</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-comments"></i>
+                        <span>استشارات يومية محدودة</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-tasks"></i>
+                        <span>اختبارات تداول أساسية</span>
+                    </div>
+                </div>
+                <button class="plan-btn" data-plan="basic">
+                    ابدأ الآن <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="plan-card pro slide-in featured">
+                <div class="plan-tag">الأكثر شيوعًا</div>
+                <div class="plan-header">
+                    <div class="plan-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h3>الخطة الاحترافية</h3>
+                    <div class="price">
+                        <span class="amount">588.9 دولار</span>
+                        <span class="period">/ 6 أشهر</span>
+                    </div>
+                </div>
+                <div class="plan-features">
+                    <div class="feature">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>وصول مميز لمدة 180 يومًا</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-video"></i>
+                        <span>فيديوهات غير محدودة</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-headset"></i>
+                        <span>استشارات غير محدودة</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-chart-line"></i>
+                        <span>اختبارات تداول متقدمة</span>
+                    </div>
+                </div>
+                <button class="plan-btn featured" data-plan="pro">
+                    ترقية إلى احترافي <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="plan-card elite slide-in">
+                <div class="plan-tag special">أفضل قيمة</div>
+                <div class="plan-header">
+                    <div class="plan-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3>الخطة المميزة</h3>
+                    <div class="price">
+                        <span class="amount">10000 دولار</span>
+                        <span class="period">/ سنويًا</span>
+                        <span class="offer">عرض خاص 🔥</span>
+                    </div>
+                </div>
+                <div class="plan-features">
+                    <div class="feature">
+                        <i class="fas fa-infinity"></i>
+                        <span>وصول VIP لمدة 365 يومًا</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>محتوى فيديو حصري</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-user-tie"></i>
+                        <span>دعم أولوية 24/7</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-award"></i>
+                        <span>موارد تداول احترافية</span>
+                    </div>
+                </div>
+                <button class="plan-btn elite" data-plan="elite">
+                    انضم إلى المميز <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+
+
+    <footer class="modern-footer">
+        <div class="footer-content">
+            <div class="footer-section brand">
+                <img src="/imgs/logo.png" alt="شعار الكابتن X" class="footer-logo">
+                <p class="brand-description">
+                    تمكين المتداولين بالمعرفة والأدوات اللازمة للتنقل بنجاح في الأسواق المالية.
+                </p>
+            </div>
+
+            <div class="footer-section quick-links">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="/">الرئيسية</a></li>
+                    <li><a href="broker.html">مراجعات الوسطاء</a></li>
+                    <li><a href="complaints.html">تقديم شكوى</a></li>
+                    <li><a href="privacy.html">سياسة الخصوصية</a></li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="footer-section social">
+            <h3>تواصل معنا </h3>
+            <div class="social-links">
+                <a href="https://www.facebook.com/Captain7Forex?mibextid=ZbWKwL" target="_blank"
+                    class="social-link facebook">
+                    <i class="fab fa-facebook"></i>
+                    <span>Facebook</span>
+                </a>
+                <a href="https://www.tiktok.com/@captain.x06?_t=8qIR0DQtPK4&_r=1" target="_blank"
+                    class="social-link tiktok">
+                    <i class="fab fa-tiktok"></i>
+                    <span>TikTok</span>
+                </a>
+                <a href="https://www.instagram.com/captain.x06?igsh=MzJmNW5ueWcwZm5o" target="_blank"
+                    class="social-link instagram">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                </a>
+                <a href="https://youtube.com/@captain-x?si=ARffLNuI1rI1DhIf" target="_blank"
+                    class="social-link youtube">
+                    <i class="fab fa-youtube"></i>
+                    <span>YouTube</span>
+                </a>
+            </div>
+        </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="copyright">
+                <p>&copy; جميع الحقوق ترجع الي كابتن اكس 2024 </p>
+            </div>
+            <div class="footer-extra-links">
+                <a href="terms.html">سياسة الاستخدام</a>
+                <span class="separator">•</span>
+                <a href="privacy.html">الخصوصية</a>
+                <span class="separator">•</span>
+                <a href="contact.html">تواصل معنا</a>
+            </div>
+        </div>
+    </footer>
 
     <!-- نافذة التسجيل (Modal) -->
     <div id="registerModal" class="modal">
@@ -419,24 +329,22 @@
         <form id="registerForm">
             <div class="form-group">
                 <label for="username">اسم المستخدم</label>
-                <input type="text" id="username" name="username" placeholder="أدخل اسم المستخدم الخاص بك" required />
+                <input type="text" id="username" name="username" placeholder="أدخل اسم المستخدم" required />
             </div>
 
             <div class="form-group">
-                <label for="email">البريد الإلكتروني</label>
+                <label for="email">عنوان البريد الإلكتروني</label>
                 <input type="email" id="email" name="email" placeholder="أدخل بريدك الإلكتروني" required />
             </div>
 
             <div class="form-group">
                 <label for="accountNumber">رقم الحساب</label>
-                <input type="text" id="accountNumber" name="accountNumber" placeholder="أدخل رقم الحساب الخاص بك"
-                    required />
+                <input type="text" id="accountNumber" name="accountNumber" placeholder="أدخل رقم الحساب" required />
             </div>
 
             <div class="form-group">
                 <label for="whatsappNumber">رقم واتساب</label>
-                <input type="tel" id="whatsappNumber" name="whatsappNumber" placeholder="أدخل رقم الواتساب الخاص بك"
-                    required />
+                <input type="tel" id="whatsappNumber" name="whatsappNumber" placeholder="أدخل رقم واتساب" required />
             </div>
 
             <div class="camera-group">
@@ -458,18 +366,11 @@
                 <input type="hidden" id="idImageData" name="idImageData" />
                 <div class="file-upload-container">
                     <input type="file" id="idFile" accept="image/*" class="file-input" />
-                    <button type="button" id="openIdCamera" class="camera-button">
-                        <i class="fas fa-camera"></i> التقاط صورة
-                    </button>
                     <label for="idFile" class="file-label">
-                        <i class="fas fa-upload"></i> رفع صورة
+                        <i class="fas fa-upload"></i> رفع الصورة
                     </label>
                 </div>
-                <video id="idCameraPreview" class="camera-preview" playsinline style="display: none;"></video>
-                <canvas id="idSnapshotCanvas" style="display: none;"></canvas>
-                <button type="button" id="captureIdPhoto" class="capture-button" style="display: none;">
-                    <i class="fas fa-camera"></i> التقاط
-                </button>
+
                 <div id="idPreview" class="image-preview"></div>
             </div>
 
@@ -477,891 +378,16 @@
                 <i class="fas fa-user-plus"></i> إكمال التسجيل
             </button>
         </form>
-        <p class="note">نحترم خصوصيتك. بياناتك ستظل آمنة.</p>
+        <p class="note">نحن نحترم خصوصيتك. ستبقى بياناتك آمنة.</p>
     </div>
 
-    <!-- الخلفية المظللة -->
+
+    <!-- الخلفية المظلل�� -->
     <div id="overlay" class="overlay"></div>
 
-    <section class="statistics">
-        <h2 class="statistics-title">تابعنا</h2>
-        <div class="statistics-container">
-            <div class="stat-box">
-                <h3><i class="fab fa-youtube"></i> يوتيوب</h3>
-                <span class="counter" data-target="198000">0</span>
-                <p>مشترك</p>
-            </div>
-            <div class="stat-box">
-                <h3><i class="fab fa-tiktok"></i> تيك توك</h3>
-                <span class="counter" data-target="3000">0</span>
-                <p>متابع</p>
-            </div>
-            <div class="stat-box">
-                <h3><i class="fab fa-instagram"></i> إنستغرام</h3>
-                <span class="counter" data-target="8000">0</span>
-                <p>متابع</p>
-            </div>
-            <div class="stat-box">
-                <h3><i class="fab fa-facebook"></i> فيسبوك</h3>
-                <span class="counter" data-target="28000">0</span>
-                <p>إعجاب</p>
-            </div>
-        </div>
-    </section>
+    <script src="./js/landing-functionality.js"></script>
+    
 
-    <section class="subscription-section">
-        <div class="subscription-header fade-in">
-            <h2>اختر مسارك في التداول</h2>
-            <p>
-                اختر الخطة التي تناسب أهدافك وخبرتك في التداول. اكتشف قوة التداول الاحترافي مع الكابتن X.
-            </p>
-        </div>
-        <div class="subscription-cards">
-            <div class="subscription-card slide-in">
-                <h3>الخطة الأساسية</h3>
-                <div class="price" data-price="32.9" data-duration="30" data-plan="basic">
-                    $32.9 / شهريًا
-                </div>
-                <ul>
-                    <li><i class="fas fa-check"></i> 30 يوم</li>
-                    <li>
-                        <i class="fas fa-check"></i> الوصول إلى دروس محدودة بالفيديو
-                    </li>
-                    <li>
-                        <i class="fas fa-check"></i> استشارات محدودة يوميًا
-                    </li>
-                    <li>
-                        <i class="fas fa-check"></i> اختبارات محدودة
-                    </li>
-                </ul>
-                <button class="subscribe-btn" data-plan="basic">
-                    ابدأ الآن
-                </button>
-            </div>
-            <div class="subscription-card slide-in">
-                <h3>الخطة الاحترافية</h3>
-                <div class="price" data-price="588.9" data-duration="180" data-plan="pro">
-                    $588.9 / نصف سنويًا
-                </div>
-                <ul>
-                    <li><i class="fas fa-check"></i> 180 يوم</li>
-                    <li>
-                        <i class="fas fa-check"></i> الوصول إلى جميع دروس الفيديو
-                    </li>
-                    <li>
-                        <i class="fas fa-check"></i> استشارات غير محدودة يوميًا
-                    </li>
-                    <li>
-                        <i class="fas fa-check"></i> اختبارات غير محدودة
-                    </li>
-                </ul>
-                <button class="subscribe-btn" data-plan="pro">
-                    ارتقِ إلى الاحتراف
-                </button>
-            </div>
-            <div class="subscription-card slide-in">
-                <h3>الخطة المميزة</h3>
-                <div class="price" data-price="999.9" data-duration="365" data-plan="elite">
-                    عرض / سنويًا 🔥
-                </div>
-                <ul>
-                    <li><i class="fas fa-check"></i> 365 يوم</li>
-                    <li>
-                        <i class="fas fa-check"></i> الوصول إلى جميع دروس الفيديو والمواد الإضافية
-                    </li>
-                    <li>
-                        <i class="fas fa-check"></i> استشارات غير محدودة مع مزايا إضافية
-                    </li>
-                    <li>
-                        <i class="fas fa-check"></i> اختبارات ونصائح غير محدودة
-                    </li>
-                </ul>
-                <button class="subscribe-btn" data-plan="elite">
-                    اختر الخطة المميزة
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <p>&copy; 2024 الكابتن X. جميع الحقوق محفوظة.</p>
-        <p>
-            تمكين المتداولين بالمعرفة والأدوات للتنقل بنجاح في الأسواق المالية.
-        </p>
-        <div class="social-links">
-            <a href="https://www.facebook.com/Captain7Forex?mibextid=ZbWKwL" target="_blank" aria-label="فيسبوك">
-                <i class="fab fa-facebook"></i>
-            </a>
-            <a href="https://www.youtube.com/Captain7Forex" target="_blank" aria-label="يوتيوب">
-                <i class="fab fa-youtube"></i>
-            </a>
-            <a href="https://www.tiktok.com/@captain7forex" target="_blank" aria-label="تيك توك">
-                <i class="fab fa-tiktok"></i>
-            </a>
-            <a href="https://www.instagram.com/Captain7Forex/" target="_blank" aria-label="إنستغرام">
-                <i class="fab fa-instagram"></i>
-            </a>
-        </div>
-    </footer>
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const loginButton = document.querySelector('.cta-buttons .cta-button');
-            if (loginButton) {
-                const authUrl = `${window.location.origin}/auth/google`;
-                loginButton.href = authUrl;
-            }
-        });
-
-        // تعيف URL الأساسي للـ API
-        const API_BASE_URL = window.location.origin;
-
-        // تعريف المتغيرات العامة
-        const elements = {
-            registerModal: document.getElementById("registerModal"),
-            overlay: document.getElementById("overlay"),
-            authBtn: document.getElementById("authBtn"),
-            registerForm: document.getElementById("registerForm"),
-            cameraElements: {
-                openButton: document.getElementById("openCamera"),
-                captureButton: document.getElementById("capturePhoto"),
-                preview: document.getElementById("cameraPreview"),
-                canvas: document.getElementById("snapshotCanvas"),
-                selfieInput: document.getElementById("selfieData"),
-            },
-        };
-
-        let stream = null;
-
-        // التحقق من صحة التوكن
-        function validateToken(token) {
-            if (!token) {
-                console.error("No token found");
-                return false;
-            }
-
-            console.log("Token found:", token.substring(0, 20) + "...");
-
-            // التحقق من شكل التوكن
-            const tokenParts = token.split(".");
-            if (tokenParts.length !== 3) {
-                console.error("Invalid token format");
-                return false;
-            }
-
-            return true;
-        }
-
-        // معالجة تسجيل الدخول بجوجل
-        if (elements.authBtn) {
-            elements.authBtn.addEventListener("click", () => {
-                window.location.href = "/auth/google";
-            });
-        }
-
-        // وظائف التحريك
-        function animateOnScroll() {
-            const elements = document.querySelectorAll(
-                ".fade-in, .slide-in",
-            );
-            const windowHeight = window.innerHeight;
-
-            elements.forEach((element) => {
-                const elementTop = element.getBoundingClientRect().top;
-                if (elementTop < windowHeight - 100) {
-                    element.classList.add("visible");
-                }
-            });
-        }
-
-        // إحصائيات العداد
-        function initializeCounters() {
-            const counters = document.querySelectorAll(".counter");
-            const statBoxes = document.querySelectorAll(".stat-box");
-            const speed = 200;
-            let started = false;
-
-            const checkVisibility = () => {
-                const rect = document
-                    .querySelector(".statistics")
-                    .getBoundingClientRect();
-                if (rect.top < window.innerHeight && !started) {
-                    started = true;
-                    statBoxes.forEach((box, index) => {
-                        setTimeout(() => {
-                            box.classList.add("visible");
-                        }, index * 200);
-                    });
-
-                    counters.forEach((counter) => {
-                        const updateCount = () => {
-                            const target =
-                                +counter.getAttribute("data-target");
-                            const count = +counter.innerText;
-                            const increment = target / speed;
-
-                            if (count < target) {
-                                counter.innerText = Math.ceil(
-                                    count + increment,
-                                );
-                                setTimeout(updateCount, 20);
-                            } else {
-                                counter.innerText = target;
-                            }
-                        };
-                        updateCount();
-                    });
-                }
-            };
-
-            window.addEventListener("scroll", checkVisibility);
-            checkVisibility();
-        }
-
-        // وظائف التعامل مع Modal
-        const modalHandler = {
-            showModal() {
-                if (elements.registerModal && elements.overlay) {
-                    elements.registerModal.style.display = "block";
-                    elements.overlay.style.display = "block";
-                }
-            },
-
-            hideModal() {
-                if (elements.registerModal && elements.overlay) {
-                    elements.registerModal.style.display = "none";
-                    elements.overlay.style.display = "none";
-                }
-            },
-
-            hideLoginButton() {
-                const loginBtn = document.getElementById('loginBtn');
-                if (loginBtn) {
-                    loginBtn.style.display = "none";
-                }
-            }
-        };
-
-        // وظائف التعامل مع الكاميرا
-        const cameraHandler = {
-            async openCamera() {
-                try {
-                    if (stream) {
-                        stream.getTracks().forEach(track => track.stop());
-                    }
-
-                    stream = await navigator.mediaDevices.getUserMedia({
-                        video: {
-                            facingMode: "user",
-                            width: { ideal: 1280 },
-                            height: { ideal: 720 }
-                        }
-                    });
-
-                    const preview = elements.cameraElements.preview;
-                    const captureBtn = elements.cameraElements.captureButton;
-                    const openBtn = elements.cameraElements.openButton;
-
-                    preview.srcObject = stream;
-                    await preview.play();
-
-                    preview.style.display = "block";
-                    captureBtn.style.display = "inline-block";
-                    openBtn.style.display = "none";
-                } catch (error) {
-                    console.error('Camera error:', error);
-                    alert('Error accessing camera. Please make sure you have granted camera permissions.');
-                }
-            },
-
-            capturePhoto() {
-                try {
-                    const preview = elements.cameraElements.preview;
-                    const canvas = elements.cameraElements.canvas;
-                    const selfieInput = elements.cameraElements.selfieInput;
-                    const captureButton = elements.cameraElements.captureButton;
-                    const openButton = elements.cameraElements.openButton;
-
-                    canvas.width = preview.videoWidth;
-                    canvas.height = preview.videoHeight;
-                    canvas.getContext('2d').drawImage(preview, 0, 0, canvas.width, canvas.height);
-
-                    const imageData = canvas.toDataURL('image/jpeg', 0.8);
-                    selfieInput.value = imageData;
-
-                    // Update preview
-                    const previewContainer = document.querySelector('.camera-group .image-preview');
-                    previewContainer.innerHTML = `<img src="${imageData}" alt="Selfie Preview" />`;
-
-                    if (stream) {
-                        stream.getTracks().forEach(track => track.stop());
-                        stream = null;
-                    }
-
-                    preview.style.display = 'none';
-                    captureButton.style.display = 'none';
-                    openButton.style.display = 'inline-block';
-                    openButton.textContent = 'Retake Photo';
-                } catch (error) {
-                    console.error('Capture error:', error);
-                    alert('Error capturing photo');
-                }
-            },
-
-            handleCameraError(error) {
-                const errorMessages = {
-                    NotAllowedError:
-                        "يرجى السماح بالوصول إلى لكاميرا من إعدادات المتصفح",
-                    NotFoundError: "ل يتم العثور على كاميرا",
-                    NotReadableError: "الكاميرا مستخدمة من قبل تطبيق آخر",
-                    default: "حدث خطأ في الوصول إلى الكاميرا",
-                };
-
-                alert(errorMessages[error.name] || errorMessages.default);
-            },
-        };
-        // وظائف التحقق وإرسال البيانات
-        const verificationHandler = {
-            async submitForm(e) {
-                e.preventDefault();
-                try {
-                    const formData = new FormData();
-
-                    // Get form data
-                    const username = document.getElementById('username').value;
-                    const email = document.getElementById('email').value;
-                    const accountNumber = document.getElementById('accountNumber').value;
-                    const phoneNumber = document.getElementById('whatsappNumber').value;
-
-                    // Get images
-                    const selfieData = document.getElementById('selfieData').value;
-                    const idImageData = document.getElementById('idImageData').value;
-
-                    if (!selfieData) {
-                        throw new Error("Profile photo is required");
-                    }
-
-                    if (!idImageData) {
-                        throw new Error("ID photo is required");
-                    }
-
-                    // Add user data
-                    formData.append('data', JSON.stringify({
-                        username,
-                        email,
-                        phoneNumber,
-                        accountNumber
-                    }));
-
-                    // Convert base64 to blob and append image
-                    const selfieBlob = await fetch(selfieData).then(r => r.blob());
-                    formData.append('image', selfieBlob, 'selfie.jpg');
-
-                    const token = localStorage.getItem('token');
-                    const userEmail = localStorage.getItem('email');
-
-                    if (!token || !userEmail) {
-                        throw new Error("Please login first");
-                    }
-
-                    const response = await fetch(`/api/v1/verifid/${userEmail}`, {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        },
-                        body: formData
-                    });
-
-                    const data = await response.json();
-
-                    if (!response.ok) {
-                        throw new Error(data.errors?.[0] || data.error || 'Registration failed');
-                    }
-
-                    alert('Registration completed successfully!');
-                    modalHandler.hideModal();
-                    window.location.reload();
-
-                } catch (error) {
-                    console.error('Form Submission Error:', error);
-                    alert(error.message || 'Registration failed. Please try again.');
-                }
-            }
-        };
-
-        // التحقق من حالة المستخدم عند تحميل الصفحة
-        async function checkUserStatus() {
-            const userEmail = localStorage.getItem("email");
-            const token = localStorage.getItem("token");
-
-            const loginBtn = document.getElementById('loginBtn');
-            const registerBtn = document.getElementById('registerBtn');
-
-            if (userEmail && token) {
-                try {
-                    const response = await fetch(`${API_BASE_URL}/api/v1/verfiy/${userEmail}`, {
-                        headers: {
-                            authorization: token,
-                            "content-type": "application/json",
-                        },
-                        method: "GET",
-                    });
-
-                    if (response.status === 404) {
-                        // User not found (deleted)
-                        localStorage.removeItem("email");
-                        localStorage.removeItem("token");
-                        loginBtn.style.display = 'inline-flex';
-                        registerBtn.style.display = 'none';
-                        return;
-                    }
-
-                    const result = await response.json();
-
-                    // Hide login button, show register button for unverified users
-                    loginBtn.style.display = 'none';
-
-                    if (result.message && result.message.includes("unverified")) {
-                        registerBtn.style.display = 'inline-flex';
-                        // Only show modal if register button is clicked
-                        registerBtn.onclick = () => modalHandler.showModal();
-                    } else if (result.message === "Invalid Authorization" || result.message === "User not found") {
-                        // Invalid token or user not found
-                        localStorage.removeItem("email");
-                        localStorage.removeItem("token");
-                        loginBtn.style.display = 'inline-flex';
-                        registerBtn.style.display = 'none';
-                    } else {
-                        registerBtn.style.display = 'none';
-                        if (result.admin === true) {
-                            const adminLink = document.querySelector('a[href="admin.html"]');
-                            if (adminLink) {
-                                adminLink.style.display = "inline-block";
-                            }
-                        }
-                    }
-                } catch (error) {
-                    console.error("Error verifying user:", error);
-                    // Clear local storage on error
-                    localStorage.removeItem("email");
-                    localStorage.removeItem("token");
-                    loginBtn.style.display = 'inline-flex';
-                    registerBtn.style.display = 'none';
-                }
-            } else {
-                loginBtn.style.display = 'inline-flex';
-                registerBtn.style.display = 'none';
-            }
-        }
-
-        // إضافة مستمعي الأحداث عند تحميل الصفحة
-        document.addEventListener("DOMContentLoaded", () => {
-            // تهيئة التحريك
-            window.addEventListener("scroll", animateOnScroll);
-            animateOnScroll();
-
-            // تهيئة العدادات
-            initializeCounters();
-
-            // تهيئة الكاميرا
-            elements.cameraElements.openButton?.addEventListener(
-                "click",
-                () => cameraHandler.openCamera(),
-            );
-            elements.cameraElements.captureButton?.addEventListener(
-                "click",
-                () => cameraHandler.capturePhoto(),
-            );
-
-            // تهيئة النموذج
-            elements.registerForm?.addEventListener("submit", (e) =>
-                verificationHandler.submitForm(e),
-            );
-
-            // التحقق من حالة المستخدم
-            checkUserStatus();
-        });
-
-        async function handlePurchase(plan) {
-            const token = localStorage.getItem('token');
-            const email = localStorage.getItem('email');
-
-            if (!token || !email) {
-                alert('Please login first');
-                return;
-            }
-
-            try {
-                // First check user status
-                const statusResponse = await fetch(`/api/v1/verfiy/${email}`, {
-                    headers: {
-                        'Authorization': token,
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                const statusData = await statusResponse.json();
-                console.log('User status check:', statusData);
-
-                // If user is not approved (status 3), prevent purchase
-                if (!statusData.approved) {
-                    alert('Your registration must be approved by admin before making purchases');
-                    return;
-                }
-
-                // Proceed with purchase request if approved
-                const response = await fetch('/api/v1/purchase-request', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': token
-                    },
-                    body: JSON.stringify({ email, plan })
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    if (data.updated) {
-                        alert('Your previous purchase request has been updated with the new plan. Please wait for admin approval.');
-                    } else {
-                        alert('Your purchase request has been submitted and is pending approval. You will be notified when approved.');
-                    }
-                } else {
-                    alert(data.error || 'An error occurred');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('An error occurred while processing your request');
-            }
-        }
-
-        // Add this function to handle approved purchases
-        async function handleApprovedPurchase(plan) {
-            const token = localStorage.getItem('token');
-            const email = localStorage.getItem('email');
-
-            try {
-                // First check if already paid
-                const checkResponse = await fetch('/api/v1/check-payment', {
-                    headers: {
-                        'Authorization': token
-                    }
-                });
-                const checkData = await checkResponse.json();
-
-                if (checkData.hasPaid && checkData.currentPlan === plan) {
-                    alert('You have already paid for this plan!');
-                    return;
-                }
-
-                const response = await fetch('/api/v1/checkout', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': token
-                    },
-                    body: JSON.stringify({ email, plan })
-                });
-
-                const data = await response.json();
-
-                if (response.ok && data.success) {
-                    window.location.href = data.url;
-                } else {
-                    alert(data.error || 'An error occurred');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('An error occurred while processing your payment');
-            }
-        }
-
-        document.querySelectorAll('.subscribe-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                const plan = this.dataset.plan;
-                const planNumber = plan === 'basic' ? 1 : plan === 'pro' ? 2 : 3;
-                handlePurchase(planNumber);
-            });
-        });
-
-        // Add this function near the top of your script section
-        async function checkApprovedPurchases() {
-            const token = localStorage.getItem('token');
-            const email = localStorage.getItem('email');
-
-            if (!token || !email) return;
-
-            try {
-                const response = await fetch('/api/v1/check-approved-purchases', {
-                    headers: {
-                        'Authorization': token,
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                const data = await response.json();
-
-                if (response.ok && data.approvedPurchases && data.approvedPurchases.length > 0) {
-                    const purchase = data.approvedPurchases[0]; // Get the first approved purchase
-                    if (confirm('Your purchase request has been approved! Would you like to proceed to checkout?')) {
-                        handleApprovedPurchase(purchase.plan);
-                    }
-                }
-            } catch (error) {
-                console.error('Error checking approved purchases:', error);
-            }
-        }
-
-        // Call this when the page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            checkApprovedPurchases();
-        });
-
-        async function checkPaymentStatus() {
-            const token = localStorage.getItem('token');
-            const email = localStorage.getItem('email');
-
-            if (!token || !email) return;
-
-            try {
-                const response = await fetch('/api/v1/check-payment', {
-                    headers: {
-                        'Authorization': token,
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    if (data.currentPlan && data.hasPaid) {
-                        // User has paid for their current plan
-                        console.log('User has active paid plan:', data.currentPlan);
-                        // You can update UI here to show paid content
-                        return true;
-                    } else if (data.currentPlan && !data.hasPaid) {
-                        // User has a plan but hasn't paid
-                        console.log('User needs to pay for plan:', data.currentPlan);
-                        alert('Please complete your payment to access the content');
-                        return false;
-                    }
-                }
-            } catch (error) {
-                console.error('Error checking payment status:', error);
-                return false;
-            }
-        }
-
-        // Add this to your DOMContentLoaded event listener
-        document.addEventListener('DOMContentLoaded', () => {
-            // ... existing code ...
-            checkPaymentStatus();
-        });
-
-        // Update the ID camera handlers
-        const idCameraHandler = {
-            async openCamera() {
-                try {
-                    const preview = document.getElementById('idCameraPreview');
-                    const captureBtn = document.getElementById('captureIdPhoto');
-                    const openBtn = document.getElementById('openIdCamera');
-                    const fileInput = document.getElementById('idFile');
-
-                    if (window.idStream) {
-                        window.idStream.getTracks().forEach(track => track.stop());
-                    }
-
-                    window.idStream = await navigator.mediaDevices.getUserMedia({
-                        video: {
-                            facingMode: "environment",
-                            width: { ideal: 1280 },
-                            height: { ideal: 720 }
-                        }
-                    });
-
-                    preview.srcObject = window.idStream;
-                    await preview.play();
-
-                    preview.style.display = "block";
-                    captureBtn.style.display = "inline-block";
-                    openBtn.style.display = "none";
-                    fileInput.style.display = "none";
-
-                } catch (error) {
-                    console.error('ID Camera error:', error);
-                    alert('Error accessing camera. Please try file upload instead.');
-                }
-            },
-
-            capturePhoto() {
-                try {
-                    const preview = document.getElementById('idCameraPreview');
-                    const canvas = document.getElementById('idSnapshotCanvas');
-                    const idImageInput = document.getElementById('idImageData');
-                    const captureBtn = document.getElementById('captureIdPhoto');
-                    const openBtn = document.getElementById('openIdCamera');
-                    const fileInput = document.getElementById('idFile');
-                    const previewDiv = document.getElementById('idPreview');
-
-                    canvas.width = preview.videoWidth;
-                    canvas.height = preview.videoHeight;
-                    canvas.getContext('2d').drawImage(preview, 0, 0, canvas.width, canvas.height);
-
-                    const imageData = canvas.toDataURL('image/jpeg', 0.8);
-                    idImageInput.value = imageData;
-
-                    // Show preview
-                    previewDiv.innerHTML = `<img src="${imageData}" alt="ID Preview" />`;
-
-                    if (window.idStream) {
-                        window.idStream.getTracks().forEach(track => track.stop());
-                    }
-
-                    preview.style.display = 'none';
-                    captureBtn.style.display = 'none';
-                    openBtn.style.display = 'inline-block';
-                    fileInput.style.display = 'inline-block';
-                    openBtn.textContent = 'Retake Photo';
-                } catch (error) {
-                    console.error('Error capturing ID photo:', error);
-                    alert('Error capturing photo. Please try again or use file upload.');
-                }
-            }
-        };
-
-        // Add event listeners after DOM is loaded
-        document.addEventListener('DOMContentLoaded', function () {
-            // ID Camera buttons
-            const openIdCameraBtn = document.getElementById('openIdCamera');
-            const captureIdPhotoBtn = document.getElementById('captureIdPhoto');
-
-            if (openIdCameraBtn) {
-                openIdCameraBtn.addEventListener('click', () => idCameraHandler.openCamera());
-            }
-
-            if (captureIdPhotoBtn) {
-                captureIdPhotoBtn.addEventListener('click', () => idCameraHandler.capturePhoto());
-            }
-
-            // File upload handler
-            const idFileInput = document.getElementById('idFile');
-            if (idFileInput) {
-                idFileInput.addEventListener('change', function (e) {
-                    const file = e.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function (event) {
-                            const idImageInput = document.getElementById('idImageData');
-                            const previewDiv = document.getElementById('idPreview');
-
-                            if (idImageInput) {
-                                idImageInput.value = event.target.result;
-                            }
-
-                            if (previewDiv) {
-                                previewDiv.innerHTML = `<img src="${event.target.result}" alt="ID Preview" />`;
-                            }
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                });
-            }
-        });
-
-        function hideAdminLinks() {
-            const adminLinks = document.querySelectorAll('.admin-only');
-            adminLinks.forEach(link => link.style.display = 'none');
-        }
-
-        function showAdminLinks() {
-            const adminLinks = document.querySelectorAll('.admin-only');
-            adminLinks.forEach(link => link.style.display = 'block');
-        }
-
-        // Add this function to check and update navigation
-        async function updateNavigation() {
-            const token = localStorage.getItem('token');
-            const email = localStorage.getItem('email');
-
-            if (!token || !email) {
-                hideAdminLinks();
-                hideCoursesLink();
-                return;
-            }
-
-            try {
-                // Check admin status
-                const adminResponse = await fetch(`/api/admin/check-access?email=${email}`, {
-                    headers: {
-                        'Authorization': token
-                    }
-                });
-
-                const adminData = await adminResponse.json();
-                if (adminData.isAdmin) {
-                    showAdminLinks();
-                } else {
-                    hideAdminLinks();
-                }
-
-                // Check payment status
-                const paymentResponse = await fetch('/api/v1/check-payment', {
-                    headers: {
-                        'Authorization': token
-                    }
-                });
-
-                if (paymentResponse.ok) {
-                    const paymentData = await paymentResponse.json();
-                    if (paymentData.hasPaid) {
-                        showCoursesLink();
-                    } else {
-                        hideCoursesLink();
-                    }
-                } else {
-                    hideCoursesLink();
-                }
-
-            } catch (error) {
-                console.error('Error checking status:', error);
-                hideAdminLinks();
-                hideCoursesLink();
-            }
-        }
-
-        function hideCoursesLink() {
-            const coursesLink = document.getElementById('coursesLink');
-            if (coursesLink) coursesLink.style.display = 'none';
-        }
-
-        function showCoursesLink() {
-            const coursesLink = document.getElementById('coursesLink');
-            if (coursesLink) coursesLink.style.display = 'block';
-        }
-
-        // Call updateNavigation when page loads AND after any login/logout
-        document.addEventListener('DOMContentLoaded', () => {
-            // Hide admin links by default
-            hideAdminLinks();
-            // Then check if we should show them
-            updateNavigation();
-        });
-
-        // Also add this to your login success handler
-        function onLoginSuccess() {
-            // ... existing login success code ...
-            updateNavigation();
-        }
-
-        // And to your logout handler
-        function logout() {
-            localStorage.clear();
-            hideAdminLinks();
-            // ... rest of logout code ...
-        }
-    </script>
     <script src="js/index.js"></script>
 </body>
 

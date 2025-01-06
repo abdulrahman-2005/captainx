@@ -5,49 +5,108 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>كابتن X - متداول محترف</title>
-    <!-- ربط خط كايرو -->
+    <meta name="author" content="Captain X">
+    <link rel="icon" href="/imgs/logo.png" type="image/png" />
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="style3.css" />
     <style>
+        /* Add RTL specific styles */
         body {
             text-align: right;
-        }
-
-        * {
-
             font-family: "Cairo", sans-serif;
         }
+
+        .alert {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            z-index: 1000;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #ff6600;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
-    <script src="js/index.js"></script>
 </head>
 
 <body>
+    <!-- Add loading overlay -->
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Add alert div -->
+    <div class="alert"></div>
+
     <header>
         <div id="container">
             <nav>
                 <div class="logo">
-                    <img src="/imgs/logo.png" alt="شعار Captain X" />
+                    <img src="../imgs/logo.png" alt="Captain X Logo" />
                 </div>
                 <div class="navigation">
                     <a class="nav-link" href="arabind.html"><i class="fas fa-home"></i> الرئيسية</a>
                     <a class="nav-link" href="arabbrok.html"><i class="fas fa-chart-line"></i> مراجعاتنا</a>
                     <a class="nav-link" href="arabcom.html"><i class="fas fa-comments"></i> الشكاوى</a>
-                    <a class="nav-link" href="complaints.html"><i class="fas fa-globe"></i> الترجمة</a>
-                    <a class="nav-link admin-link" href="admin.html" style="display: none">
-                        <i class="fas fa-user-shield"></i> الإدارة
-                    </a>
+                    <a class="nav-link" href="complaints.html"><i class="fas fa-globe"></i> ترجمة</a>
                 </div>
+
             </nav>
         </div>
     </header>
 
     <section class="content-section">
-        <!-- عمود الشكاوي -->
         <div class="left-column">
             <h1 class="section-title">تقديم شكوى</h1>
-            <form action="#" class="complaint-form">
+            <form id="complaintForm" class="complaint-form">
                 <div class="form-group-wrapper">
                     <div class="form-group">
                         <label for="name">اسم المستخدم:</label>
@@ -57,47 +116,39 @@
                         <label for="subject">الموضوع:</label>
                         <input type="text" id="subject" name="subject" required />
                     </div>
-
-                    <div class="form-group">
-                        <label for="account-number">رقم الحساب:</label>
-                        <input type="text" id="account-number" name="account-number" required />
-                    </div>
                     <div class="form-group">
                         <label for="company-name">اسم الشركة:</label>
                         <input type="text" id="company-name" name="company-name" required />
                     </div>
                     <div class="form-group">
                         <label for="company-website">رابط موقع الشركة:</label>
-                        <input type="url" id="company-website" name="company-website" />
+                        <input type="url" id="company-website" name="company-website" required />
                     </div>
                     <div class="form-group">
                         <label for="total-profits">إجمالي الأرباح:</label>
-                        <input type="number" id="total-profits" name="total-profits" required />
+                        <input type="number" id="total-profits" name="total-profits" required min="0" />
                     </div>
                     <div class="form-group">
                         <label for="total-deposit">إجمالي الإيداع:</label>
-                        <input type="number" id="total-deposit" name="total-deposit" required />
+                        <input type="number" id="total-deposit" name="total-deposit" required min="0" />
                     </div>
                     <div class="form-group full-width">
-                        <label for="message">الرسالة:</label>
+                        <label for="message">تفاصيل الشكوى:</label>
                         <textarea id="message" name="message" rows="5" required></textarea>
                     </div>
                 </div>
                 <button type="submit" class="submit-btn">
-                    إرسال الشكوى
+                    <i class="fas fa-paper-plane"></i> إرسال الشكوى
                 </button>
             </form>
         </div>
 
-        <!-- عمود التفاصيل الشخصية -->
         <div class="right-column">
             <h2>حول الشكاوى والتراخيص</h2>
             <p>
                 عند التعامل مع شركات التداول الاحتيالية، قد تكون عملية تقديم
                 الشكوى واسترداد الأموال المفقودة معقدة، ولكن من الضروري
-                اتخاذ الخطوات الصحيحة لحماية حقوقك. عادةً ما يتم توجيه
-                الشكاوى ضد الشركات التي تعمل بدون تراخيص مناسبة أو تنتهك
-                اللوائح، مما يجعل من المهم فهم كيفية التعامل معها بشكل صحيح.
+                اتخاذ الخطوات الصحيحة لحماية حقوقك.
             </p>
             <br />
             <h3>ملاحظات هامة:</h3>
@@ -116,8 +167,9 @@
                 </li>
                 <li>
                     4- لمزيد من التفاصيل، يرجى الرجوع إلى الفيديو:
-                    <a href="https://youtu.be/azZ6KSL4qQk?si=jPj6YOSLxIqrouvv"
-                        target="_blank">https://youtu.be/azZ6KSL4qQk?si=jPj6YOSLxIqrouvv</a>
+                    <a href="https://youtu.be/azZ6KSL4qQk?si=jPj6YOSLxIqrouvv" target="_blank">
+                        <i class="fab fa-youtube"></i> شاهد الفيديو التوضيحي
+                    </a>
                 </li>
             </ul>
         </div>
@@ -143,140 +195,85 @@
                 <i class="fab fa-youtube"></i>
             </a>
         </div>
-        <p><a href="privacy.html" target="_blank">سياسة الخصوصية</a></p>
+
     </footer>
 
     <script>
-        // Get user authentication details
-        const userToken = localStorage.getItem("token");
-        const userEmail = localStorage.getItem("email");
+        function showAlert(message, isError = false) {
+            const alert = document.querySelector('.alert');
+            alert.textContent = message;
+            alert.style.background = isError ? '#e74c3c' : '#2ecc71';
+            alert.style.display = 'block';
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 3000);
+        }
 
-        // Constants for form fields
-        const complaintForm = document.querySelector(".complaint-form");
-        const userNameField = document.querySelector("#name");
-        const subjectField = document.querySelector("#subject");
-        const accountNumberField =
-            document.querySelector("#account-number");
-        const companyNameField = document.querySelector("#company-name");
-        const companyWebsiteField =
-            document.querySelector("#company-website");
-        const totalProfitsField = document.querySelector("#total-profits");
-        const totalDepositField = document.querySelector("#total-deposit");
-        const messageField = document.querySelector("#message");
-        const submitButton = document.querySelector(".submit-btn");
+        function showLoading(show = true) {
+            document.querySelector('.loading-overlay').style.display = show ? 'flex' : 'none';
+        }
 
-        complaintForm.addEventListener("submit", async (event) => {
-            event.preventDefault();
+        document.getElementById('complaintForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-            // Check if user is logged in
-            if (!userToken || !userEmail) {
-                alert("Please log in to submit a complaint");
-                window.location.href = "/login.html";
-                return;
-            }
+            const token = localStorage.getItem('token');
+            const email = localStorage.getItem('email');
 
-            // Basic client-side validation
-            const requiredFields = [
-                userNameField,
-                subjectField,
-                companyNameField,
-                companyWebsiteField,
-                totalProfitsField,
-                totalDepositField,
-                messageField,
-            ];
-
-            const isValid = requiredFields.every(
-                (field) => field.value.trim() !== "",
-            );
-
-            if (!isValid) {
-                alert("Please fill in all required fields");
+            if (!token || !email) {
+                showAlert('يرجى تسجيل الدخول أولاً', true);
+                window.location.href = '/';
                 return;
             }
 
             try {
-                submitButton.disabled = true;
-                submitButton.textContent = "Sending...";
+                showLoading(true);
 
-                const response = await fetch(
-                    `/api/v1/report/send/${userEmail}`,
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: userToken,
-                        },
-                        body: JSON.stringify({
-                            user_name: userNameField.value,
-                            subject: subjectField.value,
-                            company_name: companyNameField.value,
-                            company_website: companyWebsiteField.value,
-                            profits: totalProfitsField.value,
-                            deposit: totalDepositField.value,
-                            message: messageField.value,
-                        }),
+                const formData = {
+                    user_name: document.getElementById('name').value,
+                    subject: document.getElementById('subject').value,
+                    company_name: document.getElementById('company-name').value,
+                    company_website: document.getElementById('company-website').value,
+                    profits: parseFloat(document.getElementById('total-profits').value),
+                    deposit: parseFloat(document.getElementById('total-deposit').value),
+                    message: document.getElementById('message').value
+                };
+
+                const response = await fetch(`/api/v1/report/send/${email}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': token
                     },
-                );
+                    body: JSON.stringify(formData)
+                });
 
                 const data = await response.json();
 
                 if (response.ok) {
-                    alert("Complaint submitted successfully!");
-                    complaintForm.reset();
+                    showAlert('تم إرسال الشكوى بنجاح');
+                    e.target.reset();
                 } else {
-                    switch (response.status) {
-                        case 401:
-                            if (data.message.includes("unverified")) {
-                                alert(
-                                    "Your account is not verified. Please verify your account first.",
-                                );
-                            } else {
-                                alert(
-                                    "Please log in again to submit your complaint.",
-                                );
-                                localStorage.clear();
-                                window.location.href = "/login.html";
-                            }
-                            break;
-                        case 404:
-                            alert(
-                                "User account not found. Please log in again.",
-                            );
-                            localStorage.clear();
-                            window.location.href = "/login.html";
-                            break;
-                        default:
-                            alert(
-                                data.message ||
-                                "An error occurred. Please try again.",
-                            );
-                    }
+                    throw new Error(data.message || 'حدث خطأ أثناء إرسال الشكوى');
                 }
             } catch (error) {
-                console.error("Submission error:", error);
-                alert("Network error. Please try again.");
+                console.error('Error:', error);
+                showAlert(error.message || 'حدث خطأ أثناء إرسال الشكوى', true);
             } finally {
-                submitButton.disabled = false;
-                submitButton.textContent = "Send Complaint";
+                showLoading(false);
             }
         });
 
         // Check authentication on page load
-        document.addEventListener("DOMContentLoaded", () => {
-            if (!userToken || !userEmail) {
-                const authBtn = document.getElementById("authBtn");
-                if (authBtn) {
-                    authBtn.style.display = "block";
-                }
-            } else {
-                const authBtn = document.getElementById("authBtn");
-                if (authBtn) {
-                    authBtn.style.display = "none";
-                }
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            const email = localStorage.getItem('email');
+
+            if (!token || !email) {
+                window.location.href = '/';
             }
         });
     </script>
+    <script src="js/index.js"></script>
 </body>
 
 </html>
