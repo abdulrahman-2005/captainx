@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Verification Instructions - Captain X</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .instructions-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .instructions-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .instructions-header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .instructions-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .instruction-step {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .instruction-step:hover {
+            background: #f9f9f9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .step-number {
+            width: 30px;
+            height: 30px;
+            background: #007bff;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+
+        .step-content p {
+            margin: 0;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .whatsapp-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #25D366;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-button:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+        }
+
+        .language-toggle {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .language-toggle button {
+            padding: 8px 15px;
+            margin: 0 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .language-toggle button.active {
+            background: #007bff;
+            color: white;
+        }
+
+        [lang="ar"] {
+            direction: rtl;
+            text-align: right;
+            display: none;
+        }
+
+        [lang="en"] {
+            direction: ltr;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="instructions-container">
+        <div class="language-toggle">
+            <button onclick="toggleLanguage('en')" class="active">English</button>
+            <button onclick="toggleLanguage('ar')">العربية</button>
+        </div>
+
+        <div class="instructions-content" lang="en">
+            <div class="instructions-header">
+                <h1>Payment Verification Instructions</h1>
+                <p>Follow these steps to complete your purchase</p>
+            </div>
+
+            <div class="instruction-step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Contact via WhatsApp</h3>
+                    <p>Click the WhatsApp button below to start a chat with Captain X.</p>
+                </div>
+            </div>
+
+            <div class="instruction-step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Send Purchase Details</h3>
+                    <p>Send your email address and the plan you want to purchase.</p>
+                </div>
+            </div>
+
+            <div class="instruction-step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Payment Instructions</h3>
+                    <p>You will receive payment instructions through WhatsApp.</p>
+                </div>
+            </div>
+
+            <div class="instruction-step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Send Payment Proof</h3>
+                    <p>After making the payment, send the proof of payment through WhatsApp.</p>
+                </div>
+            </div>
+
+            <div class="instruction-step">
+                <div class="step-number">5</div>
+                <div class="step-content">
+                    <h3>Wait for Verification</h3>
+                    <p>Once your payment is verified, your courses will be automatically unlocked.</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="https://wa.me/YOUR_WHATSAPP_NUMBER" class="whatsapp-button">
+                    <i class="fab fa-whatsapp"></i>
+                    Contact on WhatsApp
+                </a>
+            </div>
+        </div>
+
+        <div class="instructions-content" lang="ar">
+            <div class="instructions-header">
+                <h1>تعليمات التحقق من الدفع</h1>
+                <p>اتبع هذه الخطوات لإكمال عملية الشراء</p>
+            </div>
+
+            <div class="instruction-step">
+                <div class="step-number">١</div>
+                <div class="step-content">
+                    <h3>التواصل عبر واتساب</h3>
+                    <p>انقر على زر الواتساب أدناه لبدء محادثة مع الكابتن إكس.</p>
+                </div>
+            </div>
+
+            <div class="instruction-step">
+                <div class="step-number">٢</div>
+                <div class="step-content">
+                    <h3>إرسال تفاصيل الشراء</h3>
+                    <p>أرسل بريدك الإلكتروني والخطة التي تريد شراءها.</p>
+                </div>
+            </div>
+
+            <div class="instruction-step">
+                <div class="step-number">٣</div>
+                <div class="step-content">
+                    <h3>تعليمات الدفع</h3>
+                    <p>ستتلقى تعليمات الدفع عبر الواتساب.</p>
+                </div>
+            </div>
+
+            <div class="instruction-step">
+                <div class="step-number">٤</div>
+                <div class="step-content">
+                    <h3>إرسال إثبات الدفع</h3>
+                    <p>بعد إتمام الدفع، أرسل إثبات الدفع عبر الواتساب.</p>
+                </div>
+            </div>
+
+            <div class="instruction-step">
+                <div class="step-number">٥</div>
+                <div class="step-content">
+                    <h3>انتظر التحقق</h3>
+                    <p>بمجرد التحقق من الدفع الخاص بك، سيتم فتح الدورات تلقائياً.</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="https://wa.me/YOUR_WHATSAPP_NUMBER" class="whatsapp-button">
+                    <i class="fab fa-whatsapp"></i>
+                    تواصل عبر واتساب
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleLanguage(lang) {
+            const buttons = document.querySelectorAll('.language-toggle button');
+            buttons.forEach(button => button.classList.remove('active'));
+            const activeButton = document.querySelector(`.language-toggle button[onclick*="${lang}"]`);
+            if (activeButton) activeButton.classList.add('active');
+
+            document.querySelector('[lang="en"]').style.display = lang === 'en' ? 'block' : 'none';
+            document.querySelector('[lang="ar"]').style.display = lang === 'ar' ? 'block' : 'none';
+        }
+
+        // Check if there's a purchase request in progress
+        document.addEventListener('DOMContentLoaded', async () => {
+            const token = localStorage.getItem('token');
+            const email = localStorage.getItem('email');
+            
+            if (token && email) {
+                try {
+                    const response = await fetch('/api/v1/purchase-status', {
+                        headers: {
+                            'Authorization': token,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.approved) {
+                            alert('Your purchase has been approved! The courses are now available.');
+                            window.location.href = '/courses.html';
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error checking purchase status:', error);
+                }
+            }
+        });
+    </script>
+</body>
+</html> 

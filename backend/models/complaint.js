@@ -13,10 +13,7 @@ const complaintSchema = new mongoose.Schema({
     status: { type: Number, default: 1 } // 1 = pending, 2 = responded, 3 = archived
 });
 
-// Add this for debugging
-complaintSchema.post('save', function(doc) {
-    console.log('Saved complaint:', doc);
-});
+
 
 module.exports = (connection) => connection.model("Complaint", complaintSchema);
 

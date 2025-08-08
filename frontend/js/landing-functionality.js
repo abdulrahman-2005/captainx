@@ -150,8 +150,13 @@ const verificationHandler = {
             const idImageData = document.getElementById('idImageData').value;
             if (!selfieData || !idImageData) throw new Error('Both profile and ID photos are required');
 
+            // Convert and append selfie - don't specify a filename
             const selfieBlob = await fetch(selfieData).then(r => r.blob());
-            formData.append('image', selfieBlob, 'selfie.jpg');
+            formData.append('selfie', selfieBlob);
+
+            // Convert and append ID image - don't specify a filename
+            const idImageBlob = await fetch(idImageData).then(r => r.blob());
+            formData.append('idImage', idImageBlob);
 
             const token = localStorage.getItem('token');
             const userEmail = localStorage.getItem('email');
@@ -304,40 +309,38 @@ async function checkApprovedPurchases() {
     }
 }
 
-async function checkPaymentStatus() {
-    const token = localStorage.getItem('token');
-    const email = localStorage.getItem('email');
-    if (!token || !email) return;
-
-    try {
-        const response = await fetch('/api/v1/check-payment', {
-            headers: {
-                'Authorization': token,
-                'Content-Type': 'application/json'
-            }
-        });
-        const data = await response.json();
-        if (response.ok) {
-            if (data.currentPlan && data.hasPaid) {
-                console.log('User has active paid plan:', data.currentPlan);
-                return true;
-            } else if (data.currentPlan && !data.hasPaid) {
-                console.log('User needs to pay for plan:', data.currentPlan);
-                alert(getMessage('errors.paymentRequired'));
-                // redirect to payment page if needed
-                const userResponse = confirm('Would you like to proceed to payment?');
-                if (userResponse) {
-                    window.location.href = '/payment.html';
-                }
-
-                return false;
-            }
-        }
-    } catch (error) {
-        console.error('Error checking payment status:', error);
-        return false;
-    }
-}
+//async function checkPaymentStatus() {
+//    const token = localStorage.getItem('token');
+//    const email = localStorage.getItem('email');
+//    if (!token || !email) return;
+//
+//    try {
+//        const response = await fetch('/api/v1/check-payment', {
+//            headers: {
+//                'Authorization': token,
+//                'Content-Type': 'application/json'
+//            }
+//        });
+//        const data = await response.json();
+//        if (response.ok) {
+//            if (data.currentPlan && data.hasPaid) {
+//                return true;
+//            } else if (data.currentPlan && !data.hasPaid) {
+//                alert(getMessage('errors.paymentRequired'));
+//                // redirect to payment page if needed
+//                const userResponse = confirm('Would you like to proceed to payment?');
+//                if (userResponse) {
+//                    window.location.href = '/payment.html';
+//                }
+//
+//                return false;
+//            }
+//        }
+//    } catch (error) {
+//        console.error('Error checking payment status:', error);
+//        return false;
+//    }
+//}
 
 const idCameraHandler = {
     async openCamera() {
@@ -579,30 +582,16 @@ document.querySelectorAll('.plan-btn').forEach(button => {
             });
 
             const data = await response.json();
-
-            if (response.ok) {
-                alert(data.updated ? getMessage('updateSuccess') : getMessage('submitSuccess'));
+            
+            if (response.ok && data.success) {
+                // Redirect to verification instructions page
+                window.location.href = '/verification-instructions.html';
             } else {
-                // Handle specific error cases
-                switch (data.error) {
-                    case 'User not found':
-                        throw new Error(getMessage('errors.userNotFound'));
-                    case 'Invalid plan':
-                        throw new Error(getMessage('errors.invalidPlan'));
-                    case 'Purchase already exists':
-                        throw new Error(getMessage('errors.purchaseExists'));
-                    case 'Not authorized':
-                        throw new Error(getMessage('errors.notAuthorized'));
-                    case 'Registration not approved':
-                        throw new Error(getMessage('errors.notApproved'));
-                    default:
-                        throw new Error(data.error || getMessage('errors.default'));
-                }
+                alert(data.error || getMessage('errors.default'));
             }
         } catch (error) {
             console.error('Error:', error);
-            alert(error.message || getMessage('errors.default'));
-            
+            alert(getMessage('errors.default'));
         }
     });
 });
@@ -618,6 +607,7 @@ const messages = {
         registrationFailed: 'Registration failed. Please try again',
         submitSuccess: 'Purchase request submitted successfully',
         updateSuccess: 'Purchase request updated successfully',
+        confirmPayment: 'To proceed to payment, contact us on whatsapp (01111111111)',
         errors: {
             default: 'An error occurred. Please try again',
             cameraError: 'Error accessing camera. Please make sure you have granted camera permissions',
@@ -638,6 +628,7 @@ const messages = {
         registrationFailed: 'فشل التسجيل. يرجى المحاولة مرة أخرى',
         submitSuccess: 'تم إرسال طلب الشراء بنجاح',
         updateSuccess: 'تم تحديث طلب الشراء بنجاح',
+        confirmPayment: 'للمتابعة للدفع، يرجى الاتصال بنا على واتساب (01111111111)',
         errors: {
             default: 'حدث خطأ. يرجى المحاولة مرة أخرى',
             cameraError: 'خطأ في الوصول إلى الكاميرا. يرجى التأكد من منح صلاحيات الكاميرا',

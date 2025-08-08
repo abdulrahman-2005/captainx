@@ -15,11 +15,9 @@ module.exports = {
     run: async (req, res, db) => {
         try {
             const token = req.headers.authorization;
-            console.log('Received token:', token);
 
             // Get user by token with all details
             const user = await db.users.findOne({ token });
-            console.log('Found user:', user);
 
             if (!user) {
                 return res.status(401).json({ error: "Invalid token" });
@@ -31,7 +29,6 @@ module.exports = {
                 status: 2, // Approved
                 paid: true
             }).sort({ purchaseDate: -1 }); // Get most recent purchase
-            console.log('Found purchase:', activePurchase);
 
             if (!activePurchase) {
                 return res.status(403).json({ error: "No active plan found" });
@@ -39,7 +36,6 @@ module.exports = {
 
             // Get plan details
             const planConfig = db.pkans[activePurchase.plan];
-            console.log('Plan config:', planConfig);
 
             if (!planConfig) {
                 return res.status(404).json({ error: "Plan configuration not found" });

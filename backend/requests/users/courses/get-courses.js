@@ -33,7 +33,6 @@ module.exports = {
                 return res.status(404).json({ error: "Plan configuration not found" });
             }
 
-            console.log('Searching for folder:', planConfig.vdocipher_foldername);
 
             // Search for folder by name
             const folderSearchResponse = await axios({
@@ -49,7 +48,6 @@ module.exports = {
             });
 
             // Log the response to see its structure
-            console.log('Folder search response:', JSON.stringify(folderSearchResponse.data, null, 2));
 
             // Get folder from response
             const folder = folderSearchResponse.data.folders?.[0];
@@ -59,7 +57,6 @@ module.exports = {
                 return res.json({ courses: [] });
             }
 
-            console.log(`Found folder ID ${folder.id} for plan ${planConfig.vdocipher_foldername}`);
 
             // Get videos using v1 API with folder ID
             const vdoCipherResponse = await axios({
@@ -76,7 +73,6 @@ module.exports = {
             // Get videos from the response
             const videos = vdoCipherResponse.data.rows || [];
 
-            console.log(`Found ${videos.length} videos in folder ${planConfig.vdocipher_foldername}`);
 
             if (!videos.length) {
                 return res.json({ courses: [] });

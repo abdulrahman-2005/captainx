@@ -7,13 +7,11 @@
     <title>Captain X - Professional Trader</title>
     <meta name="author" content="Captain X">
     <link rel="icon" href="/imgs/logo.png" type="image/png" />
-    <!-- ربط خط عربي مناسب -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="adminn.css" />
     <style>
-        /* تنسيق لصندوق الخطة */
         .plan-box {
             display: flex;
             align-items: center;
@@ -369,6 +367,205 @@
             background-color: var(--primary-color);
             border-radius: 3px;
         }
+
+        /* Add these new styles */
+        .modern-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 1rem;
+        }
+
+        .modern-table th {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            text-align: left;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .modern-table td {
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.95);
+            margin-bottom: 1rem;
+        }
+
+        .modern-table tr {
+            transition: transform 0.2s;
+        }
+
+        .modern-table tr:hover {
+            transform: translateY(-2px);
+        }
+
+        .user-info-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .user-primary-info h4 {
+            color: #333;
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .user-email {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .verification-images {
+            width: 280px;
+        }
+
+        .images-container {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .image-preview-container {
+            flex: 1;
+            text-align: center;
+        }
+
+        .image-preview-container h5 {
+            margin: 0 0 0.5rem 0;
+            color: #333;
+        }
+
+        .verification-image {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .verification-image:hover {
+            transform: scale(1.05);
+        }
+
+        .no-image {
+            width: 120px;
+            height: 120px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 0.8rem;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .contact-details div {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #333;
+        }
+
+        .contact-details i {
+            color: #666;
+            width: 20px;
+        }
+
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .status-1 { background: #ffd700; color: #000; }
+        .status-2 { background: #87ceeb; color: #000; }
+        .status-3 { background: #90ee90; color: #000; }
+        .status-7 { background: #ff6b6b; color: #fff; }
+
+        .image-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .image-modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .image-modal-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .close-image-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-image-modal:hover {
+            color: #ff6600;
+        }
+
+        @media (max-width: 1200px) {
+            .verification-images {
+                width: 220px;
+            }
+
+            .verification-image {
+                width: 100px;
+                height: 100px;
+            }
+
+            .no-image {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .modern-table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .verification-images {
+                width: 180px;
+            }
+
+            .verification-image {
+                width: 80px;
+                height: 80px;
+            }
+
+            .no-image {
+                width: 80px;
+                height: 80px;
+                font-size: 0.7rem;
+            }
+        }
     </style>
 </head>
 
@@ -587,15 +784,16 @@
                 return;
             }
 
-            // Create modern table for users
+         
+            // Create modern table for users with images
             usersList.innerHTML = `
                 <div class="modern-table-container">
                     <table class="modern-table">
                         <thead>
                             <tr>
-                                <th>Email</th>
-                                <th>Username</th>
-                                <th>Phone</th>
+                                <th>User Info</th>
+                                <th>Verification Images</th>
+                                <th>Contact Details</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
@@ -603,10 +801,58 @@
                         <tbody>
                             ${data.records.map(user => `
                                 <tr>
-                                    <td>${user._id}</td>
-                                    <td>${user.username || 'Not set'}</td>
-                                    <td>${user.phone || 'Not set'}</td>
-                                    <td><span class="status-badge status-${user.status}">${getStatusText(user.status)}</span></td>
+                                    <td class="user-info-cell">
+                                        <div class="user-info-container">
+                                            <div class="user-primary-info">
+                                                <h4>${user.username || 'Not set'}</h4>
+                                                <span class="user-email">${user._id}</span>
+                                            </div>
+                                            <div class="user-secondary-info">
+                                                <span class="account-number">Account: ${user.accountNumber || 'Not set'}</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="verification-images">
+                                        <div class="images-container">
+                                            <div class="image-preview-container">
+                                                <h5>Selfie</h5>
+                                                ${user.selfiePath ? 
+                                                    `<img src="/${user.selfiePath.replace(/^backend\//, '')}" 
+                                                            alt="User Selfie" 
+                                                            class="verification-image"
+                                                            onclick="openImageModal(this.src)"/>` 
+                                                    : '<div class="no-image">No selfie uploaded</div>'
+                                                }
+                                            </div>
+                                            <div class="image-preview-container">
+                                                <h5>ID Photo</h5>
+                                                ${user.idImagePath ? 
+                                                    `<img src="/${user.idImagePath.replace(/^backend\//, '')}" 
+                                                            alt="User ID" 
+                                                            class="verification-image"
+                                                            onclick="openImageModal(this.src)"/>` 
+                                                    : '<div class="no-image">No ID uploaded</div>'
+                                                }
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="contact-info">
+                                        <div class="contact-details">
+                                            <div class="phone-number">
+                                                <i class="fas fa-phone"></i>
+                                                <span>${user.phone || 'Not set'}</span>
+                                            </div>
+                                            <div class="email-address">
+                                                <i class="fas fa-envelope"></i>
+                                                <span>${user._id}</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="status-badge status-${user.status}">
+                                            ${getStatusText(user.status)}
+                                        </span>
+                                    </td>
                                     <td class="actions">
                                         ${user.status !== 3 ? 
                                             `<button onclick="approveUser('${user._id}')" class="btn btn-success">
@@ -631,6 +877,25 @@
             if (pageInfo) {
                 pageInfo.textContent = `Page ${page} of ${Math.ceil(data.count / data.recordsPerpage)}`;
             }
+        }
+
+        // Add image modal functionality
+        function openImageModal(src) {
+            const modal = document.createElement('div');
+            modal.className = 'image-modal';
+            modal.innerHTML = `
+                <div class="image-modal-content">
+                    <span class="close-image-modal">&times;</span>
+                    <img src="${src}" alt="Enlarged verification image">
+                </div>
+            `;
+            document.body.appendChild(modal);
+
+            modal.onclick = function(e) {
+                if (e.target === modal || e.target.className === 'close-image-modal') {
+                    modal.remove();
+                }
+            };
         }
 
         function getStatusText(status) {
@@ -738,7 +1003,7 @@
                         purchaseCard.remove();
                     }
                     // Show success message
-                    alert('تم قبول الطلب بنجاح');
+                    alert('تم قبول الطلب وتفعيل الاشتراك بنجاح');
                     // Refresh the list
                     await loadPurchases(purchasesCurrentPage);
                 } else {

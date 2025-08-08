@@ -4,7 +4,6 @@ module.exports = {
     run: async (req, res, db) => {
         try {
             const allUsers = await db.users.find({});
-            console.log('All users in database:', allUsers);
             res.json({ users: allUsers });
         } catch (error) {
             console.error('Error:', error);

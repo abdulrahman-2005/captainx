@@ -39,7 +39,6 @@ module.exports = {
                 status: 1 // pending
             });
 
-            console.log('Created new complaint:', newComplaint);
 
             return res.status(200).json({
                 message: "Complaint submitted successfully!"

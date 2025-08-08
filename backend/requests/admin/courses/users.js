@@ -3,7 +3,6 @@ module.exports = {
     method: "get",
     run: async (req, res, db) => {
         try {
-            console.log('Fetching users...');
             const page = parseInt(req.query.page) || 1;
             const users = await db.users.find({ 
                 status: 1,
@@ -15,7 +14,6 @@ module.exports = {
                 verified: true
             });
             
-            console.log('Found users:', users);
             
             res.json({
                 records: users,

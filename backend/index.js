@@ -30,9 +30,10 @@ module.exports = async function (app) {
   app.use(cors());
   app.use(express.json({ limit: '50mb' }));
   app.use(express.urlencoded({ limit: '50mb', extended: true }));
-  app.use(express.static(__dirname + '/../frontend/cssprject/new'));
+  app.use(express.static(__dirname + '/../frontend'));
   app.use('/imgs', express.static(path.join(__dirname, 'imgs')));
 
+  app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
   sleep(5000)
   fs.readdirSync(__dirname + "/requests/").forEach((dir) => {
     fs.readdirSync(__dirname + `/requests/${dir}`).forEach((dir2) => {
@@ -72,7 +73,6 @@ module.exports = async function (app) {
       async (accessToken, refreshToken, profile, done) => {
         if (profile.emails && profile.emails[0]) {
           const email = profile.emails[0].value;
-          console.log("Email:", email);
           return done(null, { email, accessToken });
         } else {
           console.error("No email information available in the profile");
@@ -103,7 +103,6 @@ module.exports = async function (app) {
       }
       const user = await database.getUser(req.user.email, { domain: '.captain-x.net' });  // Set cookie domain
       const email = req.user.email;
-      console.log(email);
 
       if (!user) {
         const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: "7d" });
@@ -116,7 +115,6 @@ module.exports = async function (app) {
                 </script>`
         );
       } else {
-        console.log(user);
         res.send(
           `<script>
                     localStorage.setItem('token', '${user.token}');
@@ -133,15 +131,15 @@ module.exports = async function (app) {
   });
 
   app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/../frontend/cssprject/new/index.html');
+    res.sendFile(__dirname + '/../frontend/index.html');
   });
 
   app.get('/admin', (req, res) => {
-    res.sendFile(__dirname + '/../frontend/cssprject/new/admin.html');
+    res.sendFile(__dirname + '/../frontend/admin.html');
   });
 
   app.get('/data-for-debugging', (req, res) => {
-    res.sendFile(__dirname + '/../frontend/cssprject/new/data-for-debugging.html');
+    res.sendFile(__dirname + '/../frontend/data-for-debugging.html');
   });
 
   app.get('/login-failed', (req, res) => {

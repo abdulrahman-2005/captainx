@@ -945,6 +945,51 @@
             loadCourses();
             updatePlanInfo();
         });
+
+        async function checkAccess() {
+            const token = localStorage.getItem('token');
+            const email = localStorage.getItem('email');
+            
+            if (!token || !email) {
+                window.location.href = '/';
+                return false;
+            }
+
+            try {
+                const response = await fetch('/api/v1/check-approved-purchases', {
+                    headers: {
+                        'Authorization': token,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    // Check if user has any approved purchase
+                    const user = await fetch('/api/v1/user', {
+                        headers: {
+                            'Authorization': token,
+                            'Content-Type': 'application/json'
+                        }
+                    }).then(res => res.json());
+
+                    if (user.plan && user.planActive) {
+                        return true;
+                    }
+                }
+                
+                // If no active plan, redirect to plans page
+                alert('Please purchase a plan to access the courses.');
+                window.location.href = '/#plans';
+                return false;
+            } catch (error) {
+                console.error('Error:', error);
+                return false;
+            }
+        }
+
+        // Call checkAccess when page loads
+        document.addEventListener('DOMContentLoaded', checkAccess);
     </script>
 </body>
 

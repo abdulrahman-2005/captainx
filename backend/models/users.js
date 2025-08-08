@@ -9,7 +9,9 @@ module.exports = (connection) => {
         phone: String,
         plan: Number,
         verified: Boolean,
-        status: Number
+        status: Number,
+        selfiePath: String,
+        idImagePath: String
     });
 
     return connection.model('User', userSchema);

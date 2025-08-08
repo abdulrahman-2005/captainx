@@ -23,7 +23,6 @@ module.exports = {
             // Fetch only pending complaints (status 1)
             const complaints = await db.complaints.find({ status: 1 }).sort({ createdAt: -1 });
             
-            console.log('Found complaints:', complaints); // Add this for debugging
             
             res.json({
                 records: complaints,

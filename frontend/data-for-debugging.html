@@ -423,7 +423,6 @@
                     throw new Error(`HTTP error! status: ${complaintsResponse.status}`);
                 }
                 const complaintsData = await complaintsResponse.json();
-                console.log('Received complaints:', complaintsData);
                 if (complaintsData.records) {
                     document.getElementById('complaints-data').innerHTML = createTable(complaintsData.records, 'complaints');
                     document.getElementById('complaints-count').textContent = `${complaintsData.records.length} complaints`;
@@ -458,7 +457,6 @@
                     }
                 });
 
-                console.log('Admin check response:', response);
 
                 if (!response.ok) {
                     window.location.href = '/';

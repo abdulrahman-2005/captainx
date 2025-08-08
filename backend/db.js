@@ -104,7 +104,6 @@ module.exports = class extends EventEmitter {
 
 
     async updateUser(email, updateQuery) {
-        console.log(updateQuery)
         await this.users.findOneAndUpdate({
             _id: email
         }, updateQuery, { new: true });
@@ -147,7 +146,6 @@ module.exports = class extends EventEmitter {
         let recordSkipped = pageIndex * recordsPerpage;
 
         try {
-            console.log('Fetching requests for page:', page);
             const query = { status: { $in: [0, 1, 2] } };
 
             const data = await this.users.aggregate([
@@ -163,7 +161,6 @@ module.exports = class extends EventEmitter {
                 }
             ]).exec();
 
-            console.log('Aggregation result:', data);
 
             const result = {
                 records: data[0]?.data || [],
@@ -172,7 +169,6 @@ module.exports = class extends EventEmitter {
                 recordSkipped
             };
 
-            console.log('Returning result:', result);
             return result;
         } catch (error) {
             console.error('Error in fetchAllRequestsByPage:', error);
@@ -188,7 +184,6 @@ module.exports = class extends EventEmitter {
     }
 
     onConnected() {
-        console.log("Mongoose Connected");
     }
 
     onDisconnected() { }
@@ -266,14 +261,26 @@ module.exports = class extends EventEmitter {
             // Only update if the purchase is in pending status (1)
             const result = await this.purchases.updateOne(
                 { email, plan, status: 1 }, // Add status condition
-                { $set: { status: 2 } }
+                { 
+                    $set: { 
+                        status: 2, // Approved
+                        paid: true,
+                        paidAt: new Date()
+                    } 
+                }
             );
 
             if (result.modifiedCount > 0) {
-                // Update user's plan only if purchase was actually updated
+                // Update user's plan and activate it
                 await this.users.updateOne(
                     { _id: email },
-                    { $set: { plan } }
+                    { 
+                        $set: { 
+                            plan,
+                            planActive: true,
+                            planPurchaseDate: new Date()
+                        } 
+                    }
                 );
                 return true;
             }
